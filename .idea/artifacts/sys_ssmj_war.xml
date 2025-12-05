@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sys-ssmj:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>sys-ssmj</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="sys-ssmj.war">
+      <element id="artifact" artifact-name="sys-ssmj:war exploded" />
+    </root>
+  </artifact>
+</component>
