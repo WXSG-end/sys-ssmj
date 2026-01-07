@@ -46,6 +46,10 @@ public class YiqiModel implements Serializable {
      * 归属专业 Search
      */
     private Integer zyTypes;
+    private Integer resourceTypes;
+    private Integer stock;
+    private String unit;
+    private Integer threshold;
 
 
     /**
@@ -107,6 +111,34 @@ public class YiqiModel implements Serializable {
 
     public void setZyTypes(Integer zyTypes) {
         this.zyTypes = zyTypes;
+    }
+    public Integer getResourceTypes() {
+        return resourceTypes;
+    }
+    public void setResourceTypes(Integer resourceTypes) {
+        this.resourceTypes = resourceTypes;
+    }
+    public Integer getStock() {
+        return stock;
+    }
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Integer getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(Integer threshold) {
+        this.threshold = threshold;
     }
 
     }

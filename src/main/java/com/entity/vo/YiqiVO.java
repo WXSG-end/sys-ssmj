@@ -52,6 +52,18 @@ public class YiqiVO implements Serializable {
 
     @TableField(value = "zy_types")
     private Integer zyTypes;
+    @TableField(value = "resource_types")
+    private Integer resourceTypes;
+
+    @TableField(value = "stock")
+    private Integer stock;
+
+    @TableField(value = "unit")
+    private String unit;
+
+    @TableField(value = "threshold")
+    private Integer threshold;
+
 
 
     /**
@@ -113,6 +125,37 @@ public class YiqiVO implements Serializable {
 
     public void setZyTypes(Integer zyTypes) {
         this.zyTypes = zyTypes;
+    }
+    public Integer getResourceTypes() {
+        return resourceTypes;
+    }
+
+    public void setResourceTypes(Integer resourceTypes) {
+        this.resourceTypes = resourceTypes;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Integer getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(Integer threshold) {
+        this.threshold = threshold;
     }
 
 }

@@ -73,6 +73,30 @@ public class YiqiEntity<T> implements Serializable {
      */
     @TableField(value = "zy_types")
     private Integer zyTypes;
+    /**
+     * 资源类型 Search（1设备 2耗材）
+     */
+    @TableField(value = "resource_types")
+    private Integer resourceTypes;
+
+    /**
+     * 库存（耗材）
+     */
+    @TableField(value = "stock")
+    private Integer stock;
+
+    /**
+     * 单位（耗材）
+     */
+    @TableField(value = "unit")
+    private String unit;
+
+    /**
+     * 预警阈值（耗材）
+     */
+    @TableField(value = "threshold")
+    private Integer threshold;
+
 
 
     /**
@@ -134,6 +158,38 @@ public class YiqiEntity<T> implements Serializable {
 
     public void setZyTypes(Integer zyTypes) {
         this.zyTypes = zyTypes;
+    }
+
+    public Integer getResourceTypes() {
+        return resourceTypes;
+    }
+
+    public void setResourceTypes(Integer resourceTypes) {
+        this.resourceTypes = resourceTypes;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Integer getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(Integer threshold) {
+        this.threshold = threshold;
     }
 
 }

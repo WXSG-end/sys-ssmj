@@ -107,6 +107,34 @@
                                         >
                                     </label>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>
+                                        资源类型
+                                        <input id="resourceTypesSelect" name="resourceTypesSelect" class="form-control" readonly>
+                                    </label>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>
+                                        库存（耗材）
+                                        <input id="stock" name="stock" class="form-control" v-model="ruleForm.stock" readonly>
+                                    </label>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>
+                                        单位（耗材）
+                                        <input id="unit" name="unit" class="form-control" v-model="ruleForm.unit" readonly>
+                                    </label>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>
+                                        预警阈值（耗材）
+                                        <input id="threshold" name="threshold" class="form-control" v-model="ruleForm.threshold" readonly>
+                                    </label>
+                                </div>
+
                                 <div class="form-group col-md-12 mb-3">
                                     <button id="exitBtn" type="button" class="btn btn-primary btn-lg">返回</button>
                                 </div>
@@ -142,6 +170,8 @@
 
     var lxTypesOptions = [];
     var zyTypesOptions = [];
+    var resourceTypesOptions = [];
+
 
     var ruleForm = {};
     var vm = new Vue({
@@ -190,6 +220,14 @@
             }
         });
         }
+    function resourceTypesSelect() {
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=resource_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                resourceTypesOptions = res.data.list;
+            }
+        });
+    }
+
     // 下拉框选项回显
     function setSelectOption() {
         for (var i = 0; i < lxTypesOptions.length; i++) {
@@ -203,6 +241,12 @@
                 var zyTypesSelect = document.getElementById("zyTypesSelect");
                     zyTypesSelect.value = zyTypesOptions[i].indexName;
             }
+        }
+    }
+    for (var i = 0; i < resourceTypesOptions.length; i++) {
+        if(resourceTypesOptions[i].codeIndex == ruleForm.resourceTypes){
+            var resourceTypesSelect = document.getElementById("resourceTypesSelect");
+            resourceTypesSelect.value = resourceTypesOptions[i].indexName;
         }
     }
 
@@ -290,6 +334,7 @@
         //查询当前页面所有下拉框
         lxTypesSelect();
         zyTypesSelect();
+        resourceTypesSelect();
 
         getDetails();
 

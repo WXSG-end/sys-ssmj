@@ -9,6 +9,10 @@
         ,a.serial as serial
         ,a.lx_types as lxTypes
         ,a.zy_types as zyTypes
+         ,a.resource_types as resourceTypes
+         ,a.stock as stock
+         ,a.unit as unit
+         ,a.threshold as threshold
     </sql>
 
     <select id="selectListView" parameterType="map" resultType="com.entity.view.YiqiView" >
@@ -24,6 +28,10 @@
             </if>
             <if test=" params.zyTypes != '' and params.zyTypes != null and params.zyTypes != 'null' ">
                 and a.zy_types = #{params.zyTypes}
+                <if test=" params.resourceTypes != '' and params.resourceTypes != null and params.resourceTypes != 'null' ">
+                    and a.resource_types = #{params.resourceTypes}
+                </if>
+
             </if>
         </where>
         order by a.id desc

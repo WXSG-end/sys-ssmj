@@ -28,7 +28,7 @@ import com.utils.R;
  * 后端接口
  * @author
  * @email
- * @date 2021-02-26
+ * @date 2021-01-07
 */
 @RestController
 @Controller
@@ -69,11 +69,17 @@ public class YiqiController {
     @RequestMapping("/save")
     public R save(@RequestBody YiqiEntity yiqi, HttpServletRequest request){
         logger.debug("Controller:"+this.getClass().getName()+",save");
+        // 默认资源类型：1设备（避免前端未传导致resource_types为空）
+        if (yiqi.getResourceTypes() == null) {
+            yiqi.setResourceTypes(1);
+        }
         Wrapper<YiqiEntity> queryWrapper = new EntityWrapper<YiqiEntity>()
             .eq("serial", yiqi.getSerial())
             .eq("lx_types", yiqi.getLxTypes())
             .eq("zy_types", yiqi.getZyTypes())
-            ;
+                .eq("resource_types", yiqi.getResourceTypes())
+
+                ;
         logger.info("sql语句:"+queryWrapper.getSqlSegment());
         YiqiEntity yiqiEntity = yiqiService.selectOne(queryWrapper);
         if(yiqiEntity==null){
@@ -96,7 +102,9 @@ public class YiqiController {
             .eq("serial", yiqi.getSerial())
             .eq("lx_types", yiqi.getLxTypes())
             .eq("zy_types", yiqi.getZyTypes())
-            ;
+                .eq("resource_types", yiqi.getResourceTypes())
+
+                ;
         logger.info("sql语句:"+queryWrapper.getSqlSegment());
         YiqiEntity yiqiEntity = yiqiService.selectOne(queryWrapper);
         if(yiqiEntity==null){

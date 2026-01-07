@@ -102,6 +102,27 @@
                                        <select id="zyTypesSelect" name="zyTypes" class="form-control">
                                        </select>
                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label>资源类型（设备/耗材）</label>
+                                    <select id="resourceTypesSelect" name="resourceTypes" class="form-control">
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>库存（耗材）</label>
+                                    <input id="stock" name="stock" class="form-control" placeholder="库存（耗材）">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>单位（耗材）</label>
+                                    <input id="unit" name="unit" class="form-control" placeholder="例如：盒/瓶/支/个">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>预警阈值（耗材）</label>
+                                    <input id="threshold" name="threshold" class="form-control" placeholder="例如：10（低于10预警）">
+                                </div>
+
                                 <div class="form-group col-md-12 mb-3">
                                     <button id="exitBtn" type="button" class="btn btn-primary btn-lg">返回</button>
                                     <button id="submitBtn" type="button" class="btn btn-primary btn-lg">提交</button>
@@ -150,6 +171,8 @@
 
     var lxTypesOptions = [];
     var zyTypesOptions = [];
+    var resourceTypesOptions = [];
+
 
     var ruleForm = {};
     var vm = new Vue({
@@ -247,6 +270,14 @@
         });
         }
 
+    function resourceTypesSelect() {
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=resource_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                resourceTypesOptions = res.data.list;
+            }
+        });
+    }
+
     //初始化下拉框
     function initializationLxtypesSelect(){
         var lxTypesSelect = document.getElementById('lxTypesSelect');
@@ -260,6 +291,15 @@
                 zyTypesSelect.add(new Option(zyTypesOptions[i].serial,zyTypesOptions[i].id));
             }
     }
+    function initializationResourceTypesSelect(){
+        var resourceTypesSelect = document.getElementById('resourceTypesSelect');
+        for (var i = 0; i < resourceTypesOptions.length; i++) {
+            resourceTypesSelect.add(new Option(resourceTypesOptions[i].indexName, resourceTypesOptions[i].codeIndex));
+        }
+    }
+
+
+
     // 下拉框选项回显
     function setSelectOption() {
         for (var i = 0; i < lxTypesOptions.length; i++) {
@@ -268,7 +308,13 @@
             }
         }
         for (var i = 0; i < zyTypesOptions.length; i++) {
-            if(zyTypesOptions[i].id == ruleForm.zyTypes){//下拉框value对比,如果一致就赋值汉字
+            if(zyTypesOptions[i].id == ruleForm.zyTypes)
+                for (var i = 0; i < resourceTypesOptions.length; i++) {
+                    if(resourceTypesOptions[i].codeIndex == ruleForm.resourceTypes){
+                        document.getElementById("resourceTypesSelect").options[i].selected = true;
+                    }
+                }
+            {//下拉框value对比,如果一致就赋值汉字
                 document.getElementById("zyTypesSelect").options[i].selected = true;
             }
         }
@@ -423,7 +469,9 @@
     function dataBind() {
         $("#updateId").val(ruleForm.id);
         $("#serial").val(ruleForm.serial);
-
+        $("#stock").val(ruleForm.stock);
+        $("#unit").val(ruleForm.unit);
+        $("#threshold").val(ruleForm.threshold);
     }
 
     //图片显示
@@ -449,10 +497,13 @@
         //查询当前页面所有下拉框
         lxTypesSelect();
         zyTypesSelect();
+        resourceTypesSelect();
 
         // 初始化下拉框
         initializationLxtypesSelect();
         initializationZytypesSelect();
+        initializationResourceTypesSelect();
+
         getDetails();
         //初始化上传按钮
         upload();

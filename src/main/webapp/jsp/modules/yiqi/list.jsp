@@ -92,6 +92,13 @@
                                                         aria-controls="tableId">
                                                 </select>
                                             </label>
+                                <label>
+                                    资源类型
+                                    <select name="resourceTypesSelectSearch" id="resourceTypesSelectSearch" class="form-control form-control-sm"
+                                            aria-controls="tableId">
+                                    </select>
+                                </label>
+
 
                                 <button onclick="search()" type="button" class="btn btn-primary">查询</button>
                                 </br>
@@ -112,7 +119,12 @@
                                     <th onclick="sort('serial')">仪器名称</th>
                                     <th onclick="sort('lxTypes')">仪器类型</th>
                                     <th onclick="sort('zyTypes')">归属专业</th>
+                                    <th onclick="sort('resourceTypes')">资源类型</th>
+                                    <th onclick="sort('stock')">库存</th>
+                                    <th onclick="sort('unit')">单位</th>
+                                    <th onclick="sort('threshold')">预警阈值</th>
                                     <th>操作</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -183,6 +195,21 @@
 
             var lxTypesOptions = [];
             var zyTypesOptions = [];
+           var resourceTypesOptions = [];
+    var lxTypesLoaded = false;
+    var zyTypesLoaded = false;
+    var resourceTypesLoaded = false;
+
+    function tryInitYiqiList(){
+        if(lxTypesLoaded && zyTypesLoaded && resourceTypesLoaded){
+            // 下拉框赋值
+            lxTypesSelectSearch();
+            zyTypesSelectSearch();
+            resourceTypesSelectSearch();
+            // 拉数据
+            getDataList();
+        }
+    }
 
     function init() {
         // 满足条件渲染提醒接口
@@ -227,7 +254,14 @@
         }
 
         searchForm.zyTypes = zyTypesValue;
-
+        var resourceTypesIndex = document.getElementById("resourceTypesSelectSearch").selectedIndex;
+        var resourceTypesValue;
+        if(resourceTypesIndex == 0){
+            resourceTypesValue = '';
+        }else{
+            resourceTypesValue = document.getElementById("resourceTypesSelectSearch").options[resourceTypesIndex].value;
+        }
+        searchForm.resourceTypes = resourceTypesValue;
         getDataList();
     }
 
@@ -241,7 +275,9 @@
                     serial: searchForm.serial,
                     lxTypes: searchForm.lxTypes,
                     zyTypes: searchForm.zyTypes,
-    }, (res) => {
+                  resourceTypes: searchForm.resourceTypes,
+
+        }, (res) => {
             if(res.code == 0
             )
             {
@@ -294,14 +330,40 @@
             }
         }
         row.appendChild(lxTypesCell);
-
+        // 归属专业（zhuanye表）
         var zyTypesCell = document.createElement('td');
+        zyTypesCell.innerHTML = '';
         for (var i = 0; i < zyTypesOptions.length; i++) {
-            if(zyTypesOptions[i].id == item.zyTypes){//下拉框value对比,如果一致就赋值汉字
-                    zyTypesCell.innerHTML = zyTypesOptions[i].serial;
+            if (String(zyTypesOptions[i].id) == String(item.zyTypes)) {
+                zyTypesCell.innerHTML = zyTypesOptions[i].serial;
+                break;
             }
         }
         row.appendChild(zyTypesCell);
+
+
+        var resourceTypesCell = document.createElement('td');
+        for (var i = 0; i < resourceTypesOptions.length; i++) {
+            if(resourceTypesOptions[i].codeIndex == item.resourceTypes){
+                resourceTypesCell.innerHTML = resourceTypesOptions[i].indexName;
+            }
+        }
+        row.appendChild(resourceTypesCell);
+
+        var stockCell = document.createElement('td');
+        stockCell.innerHTML = (item.stock == null ? '' : item.stock);
+        row.appendChild(stockCell);
+
+        var unitCell = document.createElement('td');
+        unitCell.innerHTML = (item.unit == null ? '' : item.unit);
+        row.appendChild(unitCell);
+
+        var thresholdCell = document.createElement('td');
+        thresholdCell.innerHTML = (item.threshold == null ? '' : item.threshold);
+        row.appendChild(thresholdCell);
+
+
+
 
 
         //每行按钮
@@ -551,33 +613,58 @@
                         lxTypesSelectSearch.add(new Option(lxTypesOptions[i].indexName,lxTypesOptions[i].codeIndex));
                 }
             }
-     
-            function zyTypesSelectSearch() {
-                var zyTypesSelectSearch = document.getElementById('zyTypesSelectSearch');
-                    zyTypesSelectSearch.add(new Option('请选择',''));
-                for (var i = 0; i < zyTypesOptions.length; i++) {
-                        zyTypesSelectSearch.add(new Option(zyTypesOptions[i].serial,zyTypesOptions[i].id));
-                }
-            }
+
+    function zyTypesSelectSearch() {
+        var el = document.getElementById('zyTypesSelectSearch');
+        el.options.length = 0;
+        el.add(new Option('请选择',''));
+        for (var i = 0; i < zyTypesOptions.length; i++) {
+            var name = zyTypesOptions[i].serial;// 专业名称
+            el.add(new Option(name, zyTypesOptions[i].id));
+        }
+    }
+
+    function resourceTypesSelectSearch() {
+        var resourceTypesSelectSearch = document.getElementById('resourceTypesSelectSearch');
+        resourceTypesSelectSearch.add(new Option('请选择',''));
+        for (var i = 0; i < resourceTypesOptions.length; i++) {
+            resourceTypesSelectSearch.add(new Option(resourceTypesOptions[i].indexName, resourceTypesOptions[i].codeIndex));
+        }
+    }
 
 
     //查询当前页面下所有列表
-        function lxTypesSelect() {
-            //填充下拉框选项
-            http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=lx_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    lxTypesOptions = res.data.list;
+    function lxTypesSelect() {
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=lx_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                lxTypesOptions = res.data.list;
             }
+            lxTypesLoaded = true;
+            tryInitYiqiList();
         });
-        }
-        function zyTypesSelect() {
-            //填充下拉框选项
-            http("zhuanye/page?page=1&limit=100&sort=&order=&dicCode=zy_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    zyTypesOptions = res.data.list;
+    }
+    function zyTypesSelect() {
+        http("zhuanye/page?page=1&limit=100&sort=&order=", "GET", {}, (res) => {
+            if(res.code == 0){
+                zyTypesOptions = res.data.list;  // 专业列表（来自zhuanye表）
             }
+            zyTypesLoaded = true;
+            tryInitYiqiList();
         });
-        }
+    }
+
+
+    function resourceTypesSelect() {
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=resource_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                resourceTypesOptions = res.data.list;
+            }
+            resourceTypesLoaded = true;
+            tryInitYiqiList();
+        });
+    }
+
+
     //跨表
     function crossTable(id, crossTableName) {
         window.sessionStorage.setItem('crossTableId', id);
@@ -603,15 +690,12 @@
         //查询当前页面所有下拉框
         lxTypesSelect();
         zyTypesSelect();
-        getDataList();
+        resourceTypesSelect();
+
 
 
         //下拉框赋值
-                         
-             
-            lxTypesSelectSearch();
-             
-            zyTypesSelectSearch();
+
 
     <%@ include file="../../static/myInfo.js"%>
     });
