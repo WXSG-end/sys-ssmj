@@ -45,7 +45,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">课程表管理</h3>
+                    <h3 class="block-title">实验室预约</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -54,8 +54,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">课程表管理</li>
-                        <li class="breadcrumb-item active">课程表列表</li>
+                        <li class="breadcrumb-item">实验室预约</li>
+                        <li class="breadcrumb-item active">预约信息列表</li>
                     </ol>
                 </div>
             </div>
@@ -70,13 +70,13 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">课程表列表</h3>
+                        <h3 class="widget-title">预约信息列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
                                                                  
                                         <label>
                                             <input type="text" id="nameSearch" class="form-control form-control-sm"
-                                                   placeholder="课程名称" aria-controls="tableId">
+                                                   placeholder="预约名称" aria-controls="tableId">
                                         </label>
                                                                                                                                  
                                             <label>
@@ -87,7 +87,7 @@
                                             </label>
                                  
                                             <label>
-                                                专业
+                                                实验室
                                                 <select name="zyTypesSelectSearch" id="zyTypesSelectSearch" class="form-control form-control-sm"
                                                         aria-controls="tableId">
                                                 </select>
@@ -109,13 +109,13 @@
                                             <label class="custom-control-label" for="select-all"></label>
                                         </div>
                                     </th>
-                                    <th onclick="sort('name')">课程名称</th>
-                                    <th onclick="sort('attendTime')">上课时间</th>
-                                    <th onclick="sort('finishTime')">下课时间</th>
-                                    <th onclick="sort('course')">课程时间</th>
+                                    <th onclick="sort('name')">预约名称</th>
+                                    <th onclick="sort('attendTime')">开始时间</th>
+                                    <th onclick="sort('finishTime')">结束时间</th>
+                                    <th onclick="sort('course')">预约时长</th>
                                     <th onclick="sort('lsTypes')">负责老师</th>
-                                    <th onclick="sort('zyTypes')">专业</th>
-                                    <th onclick="sort('noticeContent')">具体内容</th>
+                                    <th onclick="sort('zyTypes')">实验室</th>
+                                    <th onclick="sort('noticeContent')">预约说明</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>

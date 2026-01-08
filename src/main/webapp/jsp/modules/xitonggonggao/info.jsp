@@ -56,7 +56,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑系统公告</h3>
+                    <h3 class="block-title">编辑公告</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -65,8 +65,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">系统公告管理</li>
-                        <li class="breadcrumb-item active">系统公告登记</li>
+                        <li class="breadcrumb-item">公告管理</li>
+                        <li class="breadcrumb-item active">公告登记</li>
                     </ol>
                 </div>
             </div>
@@ -81,36 +81,36 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">系统公告信息</h3>
+                        <h3 class="widget-title">公告信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>创建时间</label>
+                                        <label>发布时间</label>
 
                                         <input id="addtime" name="addtime" class="form-control"
                                                v-model="ruleForm.addtime" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>标题 Search</label>
+                                        <label>公告标题 Search</label>
 
                                         <input id="biaoti" name="biaoti" class="form-control"
                                                v-model="ruleForm.biaoti" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>类型</label>
+                                        <label>公告类型</label>
 
                                         <input id="leixing" name="leixing" class="form-control"
                                                v-model="ruleForm.leixing" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>内容</label>
+                                        <label>公告内容</label>
 
                                         <input id="neirong" name="neirong" class="form-control"
                                                v-model="ruleForm.neirong" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>日期</label>
+                                        <label>有效日期</label>
 
                                         <input id="riqi" name="riqi" class="form-control"
                                                v-model="ruleForm.riqi" readonly>

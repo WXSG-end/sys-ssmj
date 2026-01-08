@@ -58,7 +58,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑预约信息</h3>
+                    <h3 class="block-title">编辑</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -67,8 +67,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">实验室预约</li>
-                        <li class="breadcrumb-item active">编辑预约信息</li>
+                        <li class="breadcrumb-item">管理</li>
+                        <li class="breadcrumb-item active">编辑</li>
                     </ol>
                 </div>
             </div>
@@ -83,72 +83,18 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">预约信息</h3>
+                        <h3 class="widget-title">信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
-                                    <div class="form-group col-md-6">
-                                        <label>预约名称</label>
-                                        <input id="name" name="name" class="form-control"
-                                               placeholder="预约名称">
+                                    <div class="form-group col-md-6" id="div1">
+                                        <label>实验数据内容</label>
+                                        <input id="note" name="note" class="form-control" placeholder="实验数据内容">
                                     </div>
-                                   <div class="form-group col-md-6">
-                                       <label>负责老师</label>
-                                       <select id="lsTypesSelect" name="lsTypes" class="form-control">
-                                       </select>
-                                   </div>
-                                    <div class="form-group col-md-6">
-                                        <label>开始时间</label>
-                                        <input id="attendTime" name="attendTime" type="time" class="form-control"
-                                               placeholder="预约名称">
+                                    <div class="form-group col-md-6" id="div2">
+                                        <label>指导意见</label>
+                                        <input id="reply" name="reply" class="form-control" placeholder="指导意见">
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>结束时间</label>
-                                        <input id="finishTime" name="finishTime" type="time" class="form-control"
-                                               placeholder="预约名称">
-                                    </div>
-
-                                   <div class="form-group col-md-6">
-                                       <label>实验室</label>
-                                       <select id="zyTypesSelect" name="zyTypes" class="form-control">
-                                       </select>
-                                   </div>
-                                   <div class="form-group  col-md-12">
-                                       <label>预约说明</label>
-                                       <input id="noticeContentupload" name="file" type="file">
-                                       <script id="noticeContentEditor" type="text/plain"
-                                               style="width:800px;height:230px;"></script>
-                                       <script type = "text/javascript" >
-                                       //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-                                       //相见文档配置属于你自己的编译器
-                                       var noticeContentUe = UE.getEditor('noticeContentEditor', {
-                                           toolbars: [
-                                               [
-                                                   'undo', //撤销
-                                                   'bold', //加粗
-                                                   'redo', //重做
-                                                   'underline', //下划线
-                                                   'horizontal', //分隔线
-                                                   'inserttitle', //插入标题
-                                                   'cleardoc', //清空文档
-                                                   'fontfamily', //字体
-                                                   'fontsize', //字号
-                                                   'paragraph', //段落格式
-                                                   'inserttable', //插入表格
-                                                   'justifyleft', //居左对齐
-                                                   'justifyright', //居右对齐
-                                                   'justifycenter', //居中对
-                                                   'justifyjustify', //两端对齐
-                                                   'forecolor', //字体颜色
-                                                   'fullscreen', //全屏
-                                                   'edittip ', //编辑提示
-                                                   'customstyle', //自定义标题
-                                               ]
-                                           ]
-                                       });
-                                       </script>
-                                       <input type="hidden" name="noticeContent" id="noticeContent-input">
-                                   </div>
                                 <div class="form-group col-md-12 mb-3">
                                     <button id="exitBtn" type="button" class="btn btn-primary btn-lg">返回</button>
                                     <button id="submitBtn" type="button" class="btn btn-primary btn-lg">提交</button>
@@ -184,10 +130,11 @@
         src="${pageContext.request.contextPath}/resources/js/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 <script>
     <%@ include file="../../utils/menu.jsp"%>
+    <%@ include file="../../static/getRoleButtons.js"%>
     <%@ include file="../../static/setMenu.js"%>
     <%@ include file="../../utils/baseUrl.jsp"%>
 
-    var tableName = "kecheng";
+    var tableName = "liuyanxinxi";
     var pageType = "add-or-update";
     var updateId = "";
     var crossTableId = -1;
@@ -195,8 +142,6 @@
     var ruleForm = {};
     var crossRuleForm = {};
 
-    var lsTypesOptions = [];
-    var zyTypesOptions = [];
 
     var ruleForm = {};
     var vm = new Vue({
@@ -209,7 +154,7 @@
             if (id != null && id != "" && id != "null") {
                 $.ajax({
                     type: "GET",
-                    url: baseUrl + "kecheng/info/" + id,
+                    url: baseUrl + "liuyanxinxi/info/" + id,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("token", window.sessionStorage.getItem('token'));
                     },
@@ -230,14 +175,6 @@
 
     // 文件上传
     function upload() {
-        $('#noticeContentupload').fileupload({
-            url: baseUrl + 'file/upload',
-            headers: {token: window.sessionStorage.getItem("token")},
-            dataType: 'json',
-            done: function (e, data) {
-                UE.getEditor('noticeContentEditor').execCommand('insertHtml', '<img src=\"' + baseUrl + 'upload/' + data.result.file + '\" width=900 height=560>');
-            }
-        });
 
     }
 
@@ -250,21 +187,17 @@
             $.each(value, function (index, item) {
                 data[item.name] = item.value;
             });
-            debugger
-            if(data.finishTime < data.attendTime){
-                return alert("结束时间不能小于开始时间");
-            }
             let json = JSON.stringify(data);
             var urlParam;
             var successMes = '';
             if (updateId != null && updateId != "null" && updateId != '') {
                 urlParam = 'update';
-                successMes = '修改成功';
+                successMes = '回复成功';
             } else {
                 urlParam = 'save';
                 successMes = '添加成功';
             }
-            httpJson("kecheng/" + urlParam, "POST", data, (res) => {
+            httpJson("liuyanxinxi/" + urlParam, "POST", data, (res) => {
                 if(res.code == 0
         )
             {
@@ -275,7 +208,7 @@
                 }
                 if (window.sessionStorage.getItem('onlyme') != null && window.sessionStorage.getItem('onlyme') == "true") {
                     window.sessionStorage.removeItem('onlyme');
-                    window.parent.location.href = "${pageContext.request.contextPath}/index.jsp";
+                    window.parent.location.href = "../../../index.jsp";
                 } else {
                     window.location.href = "list.jsp";
                 }
@@ -289,74 +222,42 @@
     }
 
     //查询当前页面下所有列表
-        function lsTypesSelect() {
-            //填充下拉框选项
-            http("laoshixinxi/page?page=1&limit=100&sort=&order=&dicCode=ls_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    lsTypesOptions = res.data.list;
-            }
-        });
-        }
-        function zyTypesSelect() {
-            //填充下拉框选项
-            http("zhuanye/page?page=1&limit=100&sort=&order=&dicCode=zy_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    zyTypesOptions = res.data.list;
-            }
-        });
-        }
 
     //初始化下拉框
-    function initializationLstypesSelect(){
-        var lsTypesSelect = document.getElementById('lsTypesSelect');
-            for (var i = 0; i < lsTypesOptions.length; i++) {
-                lsTypesSelect.add(new Option(lsTypesOptions[i].name,lsTypesOptions[i].id));
-            }
-    }
-    function initializationZytypesSelect(){
-        var zyTypesSelect = document.getElementById('zyTypesSelect');
-            for (var i = 0; i < zyTypesOptions.length; i++) {
-                zyTypesSelect.add(new Option(zyTypesOptions[i].serial,zyTypesOptions[i].id));
-            }
-    }
     // 下拉框选项回显
     function setSelectOption() {
-        for (var i = 0; i < lsTypesOptions.length; i++) {
-            if(lsTypesOptions[i].id == ruleForm.lsTypes){//下拉框value对比,如果一致就赋值汉字
-                document.getElementById("lsTypesSelect").options[i].selected = true;
-            }
-        }
-        for (var i = 0; i < zyTypesOptions.length; i++) {
-            if(zyTypesOptions[i].id == ruleForm.zyTypes){//下拉框value对比,如果一致就赋值汉字
-                document.getElementById("zyTypesSelect").options[i].selected = true;
-            }
-        }
     }
 
 
     // 填充富文本框
     function setContent() {
-        if (ruleForm.noticeContent != null && ruleForm.noticeContent != 'null' && ruleForm.noticeContent != '') {
-            var mes = '' + ruleForm.noticeContent;
-            var noticeContentUeditor = UE.getEditor('noticeContentEditor');
-            noticeContentUeditor.ready(function () {
-                noticeContentUeditor.setContent(mes);
-            });
-        }
     }
 
     // 获取富文本框内容
     function getContent() {
-            // 获取富文本框内容
-        var noticeContentEditor =UE.getEditor('noticeContentEditor');
-        if (noticeContentEditor.hasContents()) {
-                $('#noticeContent-input').attr('value', noticeContentEditor.getPlainTxt());
-        }
 
     }
 
     //搜素输入检查
             function idChickValue(e){
+                var this_val = e.value || 0;
+                var reg=/^[0-9]*$/;
+                if(!reg.test(this_val)){
+                    e.value = "";
+                    alert("输入不合法");
+                    return false;
+                }
+            }
+            function yhnoteChickValue(e){
+                var this_val = e.value || 0;
+                var reg=/^[0-9]*$/;
+                if(!reg.test(this_val)){
+                    e.value = "";
+                    alert("输入不合法");
+                    return false;
+                }
+            }
+            function glreplyChickValue(e){
                 var this_val = e.value || 0;
                 var reg=/^[0-9]*$/;
                 if(!reg.test(this_val)){
@@ -374,22 +275,20 @@
     function validform() {
         return $("#addOrUpdateForm").validate({
             rules: {
-                name: {required: true},
-                attendTime: {required: true},
-                finishTime: {required: true},
-                course: {},
-                lsTypes: {},
-                zyTypes: {},
-                noticeContent: {},
+                note: {},
+                yhnote: {},
+                noteTime: {},
+                reply: {},
+                glreply: {},
+                replyTime: {},
             },
             messages: {
-                name: { required: "预约名称不能为空"},
-                attendTime: { required: "开始时间不能为空"},
-                finishTime: { required: "结束时间不能为空"},
-                course: {},
-                lsTypes: {},
-                zyTypes: {},
-                noticeContent: {},
+                note: {},
+                yhnote: {},
+                noteTime: {},
+                reply: {},
+                glreply: {},
+                replyTime: {},
             }
         }).form();
     }
@@ -412,7 +311,7 @@
         if (id != null && id != "" && id != "null") {
             updateId = id;
             window.sessionStorage.removeItem('updateId');
-            http("kecheng/info/" + id, "GET", {}, (res) => {
+            http("liuyanxinxi/info/" + id, "GET", {}, (res) => {
                 if(res.code == 0
         )
             {
@@ -501,11 +400,10 @@
 
     function dataBind() {
         $("#updateId").val(ruleForm.id);
-        $("#name").val(ruleForm.name);
-        $("#finishTime").val(ruleForm.finishTime);
-        $("#attendTime").val(ruleForm.attendTime);
-        $("#course").val(ruleForm.course);
-        $("#noticeContent").val(ruleForm.noticeContent);
+        $("#note").val(ruleForm.note);
+        $("#yhnote").val(ruleForm.yhnote);
+        $("#reply").val(ruleForm.reply);
+        $("#glreply").val(ruleForm.glreply);
 
     }
 
@@ -513,8 +411,16 @@
     function showImg() {
     }
 
-
     $(document).ready(function () {
+        var div1 = document.getElementById("div1");
+        var div2 = document.getElementById("div2");
+        var id = window.sessionStorage.getItem('updateId');
+        debugger
+        if(id == null){
+            div2.parentNode.removeChild(div2)
+        }else{
+            div1.parentNode.removeChild(div1)
+        }
         //设置右上角用户名
         $('.dropdown-menu h5').html(window.sessionStorage.getItem('username'))
         //设置项目名
@@ -530,12 +436,8 @@
         //添加表单校验信息文本
         addValidation();
         //查询当前页面所有下拉框
-        lsTypesSelect();
-        zyTypesSelect();
 
         // 初始化下拉框
-        initializationLstypesSelect();
-        initializationZytypesSelect();
         getDetails();
         //初始化上传按钮
         upload();
@@ -544,6 +446,7 @@
     <%@ include file="../../static/myInfo.js"%>
                 $('#submitBtn').on('click', function (e) {
                     e.preventDefault();
+                    //console.log("点击了...提交按钮");
                     submit();
                 });
         readonly();

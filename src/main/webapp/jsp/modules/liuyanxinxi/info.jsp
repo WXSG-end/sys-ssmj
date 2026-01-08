@@ -86,37 +86,37 @@
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>留言信息</label>
+                                        <label>预约审核内容</label>
 
                                         <input id="note" name="note" class="form-control"
                                                v-model="ruleForm.note" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>留言人</label>
+                                        <label>申请人</label>
 
                                         <input id="yhnote" name="yhnote" class="form-control"
                                                v-model="ruleForm.yhnote" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>留言时间 </label>
+                                        <label>申请时间 </label>
 
                                         <input id="noteTime" name="noteTime" class="form-control"
                                                v-model="ruleForm.noteTime" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>回复</label>
+                                        <label>审核意见</label>
 
                                         <input id="reply" name="reply" class="form-control"
                                                v-model="ruleForm.reply" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>回复人</label>
+                                        <label>审核人</label>
 
                                         <input id="glreply" name="glreply" class="form-control"
                                                v-model="ruleForm.glreply" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>回复时间 </label>
+                                        <label>审核时间 </label>
 
                                         <input id="replyTime" name="replyTime" class="form-control"
                                                v-model="ruleForm.replyTime" readonly>

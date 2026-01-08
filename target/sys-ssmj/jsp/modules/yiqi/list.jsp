@@ -45,7 +45,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">仪器管理</h3>
+                    <h3 class="block-title">资源信息列表</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -54,8 +54,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">仪器管理</li>
-                        <li class="breadcrumb-item active">仪器列表</li>
+                        <li class="breadcrumb-item">设备/耗材服务</li>
+                        <li class="breadcrumb-item active">资源信息列表</li>
                     </ol>
                 </div>
             </div>
@@ -70,24 +70,24 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">仪器列表</h3>
+                        <h3 class="widget-title">资源信息列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
                                                                  
                                         <label>
                                             <input type="text" id="serialSearch" class="form-control form-control-sm"
-                                                   placeholder="仪器名称" aria-controls="tableId">
+                                                   placeholder="资源名称" aria-controls="tableId">
                                         </label>
                                  
                                             <label>
-                                                仪器类型
+                                                资源类别
                                                 <select name="lxTypesSelectSearch" id="lxTypesSelectSearch" class="form-control form-control-sm"
                                                         aria-controls="tableId">
                                                 </select>
                                             </label>
                                  
                                             <label>
-                                                归属专业
+                                                所属实验室
                                                 <select name="zyTypesSelectSearch" id="zyTypesSelectSearch" class="form-control form-control-sm"
                                                         aria-controls="tableId">
                                                 </select>
@@ -116,9 +116,9 @@
                                             <label class="custom-control-label" for="select-all"></label>
                                         </div>
                                     </th>
-                                    <th onclick="sort('serial')">仪器名称</th>
-                                    <th onclick="sort('lxTypes')">仪器类型</th>
-                                    <th onclick="sort('zyTypes')">归属专业</th>
+                                    <th onclick="sort('serial')">资源名称</th>
+                                    <th onclick="sort('lxTypes')">资源类别</th>
+                                    <th onclick="sort('zyTypes')">所属实验室</th>
                                     <th onclick="sort('resourceTypes')">资源类型</th>
                                     <th onclick="sort('stock')">库存</th>
                                     <th onclick="sort('unit')">单位</th>
@@ -330,7 +330,7 @@
             }
         }
         row.appendChild(lxTypesCell);
-        // 归属专业（zhuanye表）
+        // 所属实验室（zhuanye表）
         var zyTypesCell = document.createElement('td');
         zyTypesCell.innerHTML = '';
         for (var i = 0; i < zyTypesOptions.length; i++) {

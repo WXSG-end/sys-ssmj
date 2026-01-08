@@ -58,7 +58,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑课程表</h3>
+                    <h3 class="block-title">编辑预约信息</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -67,8 +67,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">课程表管理</li>
-                        <li class="breadcrumb-item active">编辑课程表</li>
+                        <li class="breadcrumb-item">实验室预约</li>
+                        <li class="breadcrumb-item active">编辑预约信息</li>
                     </ol>
                 </div>
             </div>
@@ -83,14 +83,14 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">课程表信息</h3>
+                        <h3 class="widget-title">预约信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>课程名称</label>
+                                        <label>预约名称</label>
                                         <input id="name" name="name" class="form-control"
-                                               placeholder="课程名称">
+                                               placeholder="预约名称">
                                     </div>
                                    <div class="form-group col-md-6">
                                        <label>负责老师</label>
@@ -98,23 +98,23 @@
                                        </select>
                                    </div>
                                     <div class="form-group col-md-6">
-                                        <label>上课时间</label>
+                                        <label>开始时间</label>
                                         <input id="attendTime" name="attendTime" type="time" class="form-control"
-                                               placeholder="课程名称">
+                                               placeholder="预约名称">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>下课时间</label>
+                                        <label>结束时间</label>
                                         <input id="finishTime" name="finishTime" type="time" class="form-control"
-                                               placeholder="课程名称">
+                                               placeholder="预约名称">
                                     </div>
 
                                    <div class="form-group col-md-6">
-                                       <label>专业</label>
+                                       <label>实验室</label>
                                        <select id="zyTypesSelect" name="zyTypes" class="form-control">
                                        </select>
                                    </div>
                                    <div class="form-group  col-md-12">
-                                       <label>内容</label>
+                                       <label>预约说明</label>
                                        <input id="noticeContentupload" name="file" type="file">
                                        <script id="noticeContentEditor" type="text/plain"
                                                style="width:800px;height:230px;"></script>
@@ -252,7 +252,7 @@
             });
             debugger
             if(data.finishTime < data.attendTime){
-                return alert("下课时间不能小于上课时间");
+                return alert("结束时间不能小于开始时间");
             }
             let json = JSON.stringify(data);
             var urlParam;
@@ -383,9 +383,9 @@
                 noticeContent: {},
             },
             messages: {
-                name: { required: "课程名称不能为空"},
-                attendTime: { required: "上课时间不能为空"},
-                finishTime: { required: "下课时间不能为空"},
+                name: { required: "预约名称不能为空"},
+                attendTime: { required: "开始时间不能为空"},
+                finishTime: { required: "结束时间不能为空"},
                 course: {},
                 lsTypes: {},
                 zyTypes: {},

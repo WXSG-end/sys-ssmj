@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">系统公告管理</li>
-                        <li class="breadcrumb-item active">系统公告列表</li>
+                        <li class="breadcrumb-item active">公告交流列表</li>
                     </ol>
                 </div>
             </div>
@@ -70,13 +70,13 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">系统公告列表</h3>
+                        <h3 class="widget-title">公告交流列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
                                                                                                  
                                         <label>
                                             <input type="text" id="biaotiSearch" class="form-control form-control-sm"
-                                                   placeholder="标题" aria-controls="tableId">
+                                                   placeholder="公告标题" aria-controls="tableId">
                                         </label>
                                                                                                 
                                 <button onclick="search()" type="button" class="btn btn-primary">查询</button>
@@ -94,11 +94,11 @@
                                             <label class="custom-control-label" for="select-all"></label>
                                         </div>
                                     </th>
-                                    <th onclick="sort('addtime')">创建时间</th>
-                                    <th onclick="sort('biaoti')">标题</th>
-                                    <th onclick="sort('leixing')">类型</th>
-                                    <th onclick="sort('neirong')">内容</th>
-                                    <th onclick="sort('riqi')">日期</th>
+                                    <th onclick="sort('addtime')">发布时间</th>
+                                    <th onclick="sort('biaoti')">公告标题</th>
+                                    <th onclick="sort('leixing')">公告类型</th>
+                                    <th onclick="sort('neirong')">公告内容</th>
+                                    <th onclick="sort('riqi')">有效日期</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>

@@ -56,7 +56,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑仪器</h3>
+                    <h3 class="block-title">资源信息详情</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -65,8 +65,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">仪器管理</li>
-                        <li class="breadcrumb-item active">仪器登记</li>
+                        <li class="breadcrumb-item">设备/耗材服务</li>
+                        <li class="breadcrumb-item active">资源信息详情</li>
                     </ol>
                 </div>
             </div>
@@ -81,19 +81,19 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">仪器信息</h3>
+                        <h3 class="widget-title">资源信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>仪器名称</label>
+                                        <label>资源名称</label>
 
                                         <input id="serial" name="serial" class="form-control"
                                                v-model="ruleForm.serial" readonly>
                                     </div>
                                 <div class="form-group col-md-6">
                                     <label>
-                                        仪器类型
+                                        资源类别
                                         <input id="lxTypesSelect" name="lxTypesSelect" class="form-control"
                                         // v-model="ruleForm.lxTypes" readonly
                                         >
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>
-                                        归属专业
+                                        所属实验室
                                         <input id="zyTypesSelect" name="zyTypesSelect" class="form-control"
                                         // v-model="ruleForm.zyTypes" readonly
                                         >

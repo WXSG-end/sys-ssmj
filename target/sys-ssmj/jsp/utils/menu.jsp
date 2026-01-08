@@ -4,51 +4,51 @@ var menus = [{
 	"backMenu": [{
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "学生信息",
+			"menu": "学生用户",
 			"menuJump": "列表",
 			"tableName": "xueshengxinxi"
 		}],
-		"menu": "学生管理"
+		"menu": "用户管理-学生"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "老师信息",
+			"menu": "教师用户",
 			"menuJump": "列表",
 			"tableName": "laoshixinxi"
 		}],
-		"menu": "老师管理"
+		"menu": "用户管理-教师"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "课程信息",
+			"menu": "预约信息",
 			"menuJump": "列表",
 			"tableName": "kecheng"
 		}],
-		"menu": "课程管理"
+		"menu":"实验室预约"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "仪器信息",
+			"menu": "资源信息",
 			"menuJump": "列表",
 			"tableName": "yiqi"
 		}],
-		"menu": "仪器管理"
+		"menu": "设备/耗材服务"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "专业信息",
+			"menu": "实验数据分类",
 			"menuJump": "列表",
 			"tableName": "zhuanye"
 		}],
-		"menu": "专业管理"
+		"menu": "实验数据管理"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "留言信息",
+			"menu": "实验数据记录",
 			"menuJump": "列表",
-			"tableName": "liuyanxinxi"
+			"tableName": "shiyanshuju"
 		}],
-		"menu": "留言管理"
+		"menu": "预约审核"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
@@ -56,15 +56,15 @@ var menus = [{
 			"menuJump": "列表",
 			"tableName": "xitonggonggao"
 		}],
-		"menu": "公告管理"
+		"menu": "公告交流"
 	},{
 "child": [{
 "buttons": ["新增", "修改", "删除"],
-"menu": "字典管理",
+"menu": "统计指标配置",
 "menuJump": "列表",
 "tableName": "dictionary"
 }],
-"menu": "字典管理"
+"menu": "数据统计"
 }],
 	"frontMenu": [],
 	"roleName": "管理员",
@@ -73,51 +73,51 @@ var menus = [{
 	"backMenu": [{
 		"child": [{
 			"buttons": ["新增"],
-			"menu": "学生信息",
+			"menu": "学生用户",
 			"menuJump": "列表",
 			"tableName": "xueshengxinxi"
 		}],
-		"menu": "学生管理"
+		"menu": "用户管理-学生"
 	}, {
 		"child": [{
 			"buttons": ["修改"],
-			"menu": "老师信息",
+			"menu": "教师用户",
 			"menuJump": "列表",
 			"tableName": "laoshixinxi"
 		}],
-		"menu": "老师管理"
+		"menu": "用户管理-教师"
 	}, {
 		"child": [{
 			"buttons": ["修改"],
-			"menu": "课程信息",
+			"menu": "预约信息",
 			"menuJump": "列表",
 			"tableName": "kecheng"
 		}],
-		"menu": "课程管理"
+		"menu":"实验室预约"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改"],
-			"menu": "仪器信息",
+			"menu": "资源信息",
 			"menuJump": "列表",
 			"tableName": "yiqi"
 		}],
-		"menu": "仪器管理"
+		"menu": "设备/耗材服务"
 	}, {
 		"child": [{
 			"buttons": [],
-			"menu": "专业信息",
+			"menu": "实验数据分类",
 			"menuJump": "列表",
 			"tableName": "zhuanye"
 		}],
-		"menu": "专业管理"
+		"menu": "实验数据管理"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改"],
-			"menu": "留言信息",
+			"menu": "实验数据记录",
 			"menuJump": "列表",
-			"tableName": "liuyanxinxi"
+			"tableName": "shiyanshuju"
 		}],
-		"menu": "留言管理"
+		"menu": "预约审核"
 	}, {
 		"child": [{
 			"buttons": [],
@@ -125,7 +125,7 @@ var menus = [{
 			"menuJump": "列表",
 			"tableName": "xitonggonggao"
 		}],
-		"menu": "公告管理"
+		"menu": "公告交流"
 	}],
 	"frontMenu": [],
 	"roleName": "老师",
@@ -134,43 +134,43 @@ var menus = [{
 	"backMenu": [{
 		"child": [{
 			"buttons": ["修改"],
-			"menu": "学生信息",
+			"menu": "学生用户",
 			"menuJump": "列表",
 			"tableName": "xueshengxinxi"
 		}],
-		"menu": "学生管理"
+		"menu": "用户管理-学生"
 	}, {
 		"child": [{
 			"buttons": [],
-			"menu": "课程信息",
+			"menu": "预约信息",
 			"menuJump": "列表",
 			"tableName": "kecheng"
 		}],
-		"menu": "课程管理"
+		"menu":"实验室预约"
 	}, {
 		"child": [{
 			"buttons": [],
-			"menu": "仪器信息",
+			"menu": "资源信息",
 			"menuJump": "列表",
 			"tableName": "yiqi"
 		}],
-		"menu": "仪器管理"
+		"menu": "设备/耗材服务"
 	}, {
 		"child": [{
 			"buttons": [],
-			"menu": "专业信息",
+			"menu": "实验数据分类",
 			"menuJump": "列表",
 			"tableName": "zhuanye"
 		}],
-		"menu": "专业管理"
+		"menu": "实验数据管理"
 	}, {
 		"child": [{
 			"buttons": ["新增"],
-			"menu": "留言信息",
+			"menu": "实验数据记录",
 			"menuJump": "列表",
-			"tableName": "liuyanxinxi"
+			"tableName": "shiyanshuju"
 		}],
-		"menu": "留言管理"
+		"menu": "预约审核"
 	}, {
 		"child": [{
 			"buttons": [],
@@ -178,7 +178,7 @@ var menus = [{
 			"menuJump": "列表",
 			"tableName": "xitonggonggao"
 		}],
-		"menu": "公告管理"
+		"menu": "公告交流"
 	}],
 	"frontMenu": [],
 	"roleName": "学生",

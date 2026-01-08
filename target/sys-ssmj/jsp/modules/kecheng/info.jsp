@@ -56,7 +56,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑课程表</h3>
+                    <h3 class="block-title">编辑预约信息</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -65,8 +65,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">课程表管理</li>
-                        <li class="breadcrumb-item active">课程表登记</li>
+                        <li class="breadcrumb-item">实验室预约</li>
+                        <li class="breadcrumb-item active">预约信息详情</li>
                     </ol>
                 </div>
             </div>
@@ -81,24 +81,24 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">课程表信息</h3>
+                        <h3 class="widget-title">预约信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>课程名称</label>
+                                        <label>预约名称</label>
 
                                         <input id="name" name="name" class="form-control"
                                                v-model="ruleForm.name" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>上课时间</label>
+                                        <label>开始时间</label>
 
                                         <input id="attendTime" name="attendTime" class="form-control"
                                                v-model="ruleForm.attendTime" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>下课时间</label>
+                                        <label>结束时间</label>
 
                                         <input id="finishTime" name="finishTime" class="form-control"
                                                v-model="ruleForm.finishTime" readonly>
@@ -119,14 +119,14 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>
-                                        专业
+                                        实验室
                                         <input id="zyTypesSelect" name="zyTypesSelect" class="form-control"
                                         // v-model="ruleForm.zyTypes" readonly
                                         >
                                     </label>
                                 </div>
                                 <div>
-                                    <label>具体内容</label>
+                                    <label>预约说明</label>
                                     <script id="noticeContentEditor" type="text/plain"
                                             style="width:800px;height:230px;"></script>
                                     <script type = "text/javascript" >

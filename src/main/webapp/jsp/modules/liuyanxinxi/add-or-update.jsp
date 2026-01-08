@@ -88,8 +88,8 @@
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6" id="div1">
-                                        <label>留言信息</label>
-                                        <input id="note" name="note" class="form-control" placeholder="留言信息">
+                                        <label>预约申请</label>
+                                        <input id="note" name="note" class="form-control" placeholder="预约申请">
                                     </div>
                                     <div class="form-group col-md-6" id="div2">
                                         <label>回复</label>

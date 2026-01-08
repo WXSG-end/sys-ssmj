@@ -58,7 +58,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑仪器</h3>
+                    <h3 class="block-title">编辑资源信息</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -67,8 +67,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">仪器管理</li>
-                        <li class="breadcrumb-item active">编辑仪器</li>
+                        <li class="breadcrumb-item">设备/耗材服务</li>
+                        <li class="breadcrumb-item active">编辑资源信息</li>
                     </ol>
                 </div>
             </div>
@@ -83,22 +83,22 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">仪器信息</h3>
+                        <h3 class="widget-title">资源信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>仪器名称</label>
+                                        <label>资源名称</label>
                                         <input id="serial" name="serial" class="form-control"
-                                               placeholder="仪器名称">
+                                               placeholder="资源名称">
                                     </div>
                                    <div class="form-group col-md-6">
-                                       <label>仪器类型</label>
+                                       <label>资源类别</label>
                                        <select id="lxTypesSelect" name="lxTypes" class="form-control">
                                        </select>
                                    </div>
                                    <div class="form-group col-md-6">
-                                       <label>归属专业</label>
+                                       <label>所属实验室</label>
                                        <select id="zyTypesSelect" name="zyTypes" class="form-control">
                                        </select>
                                    </div>

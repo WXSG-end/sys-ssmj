@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">管理</li>
-                        <li class="breadcrumb-item active">列表</li>
+                        <li class="breadcrumb-item active">预约审核记录列表</li>
                     </ol>
                 </div>
             </div>
@@ -70,10 +70,10 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">列表</h3>
+                        <h3 class="widget-title">预约审核记录列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
-                                <button onclick="add()" class="btn btn-success ">留言</button>
+                                <button onclick="add()" class="btn btn-success ">提交申请</button>
                                 <button onclick="deleteMore()" type="button" class="btn btn-danger 删除">批量删除</button>
                             </div>
                             <table id="tableId" class="table table-bordered table-striped">
@@ -86,12 +86,12 @@
                                             <label class="custom-control-label" for="select-all"></label>
                                         </div>
                                     </th>
-                                    <th onclick="sort('note')">留言信息</th>
-                                    <th onclick="sort('yhnote')">留言人</th>
-                                    <th onclick="sort('noteTime')">留言时间</th>
-                                    <th onclick="sort('reply')">回复信息</th>
-                                    <th onclick="sort('glreply')">回复人</th>
-                                    <th onclick="sort('replyTime')">回复时间</th>
+                                    <th onclick="sort('note')">预约申请内容</th>
+                                    <th onclick="sort('yhnote')">申请人</th>
+                                    <th onclick="sort('noteTime')">申请时间</th>
+                                    <th onclick="sort('reply')">审核意见</th>
+                                    <th onclick="sort('glreply')">审核人</th>
+                                    <th onclick="sort('replyTime')">审核时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -266,7 +266,7 @@
         editBtn.setAttribute("type", "button");
         editBtn.setAttribute("class", "btn btn-warning btn-sm 修改");
         editBtn.setAttribute("onclick", editAttr);
-        editBtn.innerHTML = "回复"
+        editBtn.innerHTML = "审核"
         btnGroup.appendChild(editBtn)
         //删除按钮
         var deleteBtn = document.createElement('button');

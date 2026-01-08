@@ -58,7 +58,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑系统公告</h3>
+                    <h3 class="block-title">编辑公告</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -67,8 +67,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">系统公告管理</li>
-                        <li class="breadcrumb-item active">编辑系统公告</li>
+                        <li class="breadcrumb-item">公告交流</li>
+                        <li class="breadcrumb-item active">编辑公告</li>
                     </ol>
                 </div>
             </div>
@@ -83,34 +83,34 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">系统公告信息</h3>
+                        <h3 class="widget-title">公告内容</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>创建时间</label>
+                                        <label>发布时间</label>
                                         <input id="addtime" name="addtime" class="form-control"
-                                               placeholder="创建时间">
+                                               placeholder="发布时间">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>标题</label>
+                                        <label>公告标题</label>
                                         <input id="biaoti" name="biaoti" class="form-control"
-                                               placeholder="标题">
+                                               placeholder="公告标题">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>类型</label>
+                                        <label>公告类型</label>
                                         <input id="leixing" name="leixing" class="form-control"
-                                               placeholder="类型">
+                                               placeholder="公告类型">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>内容</label>
+                                        <label>公告内容</label>
                                         <input id="neirong" name="neirong" class="form-control"
-                                               placeholder="内容">
+                                               placeholder="公告内容">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>日期</label>
+                                        <label>有效日期</label>
                                         <input id="riqi" name="riqi" class="form-control"
-                                               placeholder="日期">
+                                               placeholder="有效日期">
                                     </div>
                                 <div class="form-group col-md-12 mb-3">
                                     <button id="exitBtn" type="button" class="btn btn-primary btn-lg">返回</button>

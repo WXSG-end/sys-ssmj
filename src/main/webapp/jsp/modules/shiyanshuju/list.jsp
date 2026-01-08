@@ -45,7 +45,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">系统公告管理</h3>
+                    <h3 class="block-title">管理</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -54,8 +54,8 @@
                                 <span class="ti-home"></span>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">系统公告管理</li>
-                        <li class="breadcrumb-item active">公告交流列表</li>
+                        <li class="breadcrumb-item">管理</li>
+                        <li class="breadcrumb-item active">实验数据记录列表</li>
                     </ol>
                 </div>
             </div>
@@ -70,19 +70,11 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">公告交流列表</h3>
+                        <h3 class="widget-title">实验数据记录列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
-                                                                                                 
-                                        <label>
-                                            <input type="text" id="biaotiSearch" class="form-control form-control-sm"
-                                                   placeholder="公告标题" aria-controls="tableId">
-                                        </label>
-                                                                                                
-                                <button onclick="search()" type="button" class="btn btn-primary">查询</button>
-                                <button onclick="add()" type="button" class="btn btn-success 新增">添加</button>
+                                <button onclick="add()" class="btn btn-success ">录入数据</button>
                                 <button onclick="deleteMore()" type="button" class="btn btn-danger 删除">批量删除</button>
-                                <button onclick="graph()" type="button" class="btn btn-danger 报表">报表</button>
                             </div>
                             <table id="tableId" class="table table-bordered table-striped">
                                 <thead>
@@ -94,11 +86,12 @@
                                             <label class="custom-control-label" for="select-all"></label>
                                         </div>
                                     </th>
-                                    <th onclick="sort('addtime')">发布时间</th>
-                                    <th onclick="sort('biaoti')">公告标题</th>
-                                    <th onclick="sort('leixing')">公告类型</th>
-                                    <th onclick="sort('neirong')">公告内容</th>
-                                    <th onclick="sort('riqi')">有效日期</th>
+                                    <th onclick="sort('note')">实验数据内容</th>
+                                    <th onclick="sort('yhnote')">记录人</th>
+                                    <th onclick="sort('noteTime')">记录时间</th>
+                                    <th onclick="sort('reply')">审核意见</th>
+                                    <th onclick="sort('glreply')">审核人</th>
+                                    <th onclick="sort('replyTime')">审核时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -156,7 +149,7 @@
             <%@ include file="../../utils/baseUrl.jsp"%>
             <%@ include file="../../static/getRoleButtons.js"%>
             <%@ include file="../../static/crossBtnControl.js"%>
-    var tableName = "xitonggonggao";
+    var tableName = "liuyanxinxi";
     var pageType = "list";
     var searchForm = {key: ""};
     var pageIndex = 1;
@@ -186,22 +179,19 @@
     // 查询
     function search() {
         searchForm = {key: ""};
-             
-        if ($('#biaotiSearch').val() != null && $('biaotiSearch').val() != '') {
-            searchForm.biaoti = $('#biaotiSearch').val();
-
-        }
-                    getDataList();
+                 
+        getDataList();
     }
 
     // 获取数据列表
     function getDataList() {
-        http("xitonggonggao/page", "GET", {
+        http("liuyanxinxi/page", "GET", {
             page: pageIndex,
             limit: pageSize,
             sort: sortColumn,
             order: sortOrder,
-                    biaoti: searchForm.biaoti,
+                    noteTime: searchForm.noteTime,
+                    replyTime: searchForm.replyTime,
     }, (res) => {
             if(res.code == 0
             )
@@ -244,45 +234,39 @@
         checkbox.appendChild(checkboxDiv);
         row.appendChild(checkbox)
 
-        var addtimeCell = document.createElement('td');
-        addtimeCell.innerHTML = item.addtime;
-        row.appendChild(addtimeCell);
+        var noteCell = document.createElement('td');
+        noteCell.innerHTML = item.note;
+        row.appendChild(noteCell);
 
-        var biaotiCell = document.createElement('td');
-        biaotiCell.innerHTML = item.biaoti;
-        row.appendChild(biaotiCell);
+        var yhnoteCell = document.createElement('td');
+        yhnoteCell.innerHTML = item.yhnote;
+        row.appendChild(yhnoteCell);
+        var noteTimeCell = document.createElement('td');
+        noteTimeCell.innerHTML = item.noteTime;
+        row.appendChild(noteTimeCell);
 
-        var leixingCell = document.createElement('td');
-        leixingCell.innerHTML = item.leixing;
-        row.appendChild(leixingCell);
+        var replyCell = document.createElement('td');
+        replyCell.innerHTML = item.reply;
+        row.appendChild(replyCell);
 
-        var neirongCell = document.createElement('td');
-        neirongCell.innerHTML = item.neirong;
-        row.appendChild(neirongCell);
-
-        var riqiCell = document.createElement('td');
-        riqiCell.innerHTML = item.riqi;
-        row.appendChild(riqiCell);
+        var glreplyCell = document.createElement('td');
+        glreplyCell.innerHTML = item.glreply;
+        row.appendChild(glreplyCell);
+        var replyTimeCell = document.createElement('td');
+        replyTimeCell.innerHTML = item.replyTime;
+        row.appendChild(replyTimeCell);
 
 
         //每行按钮
         var btnGroup = document.createElement('td');
 
-        //详情按钮
-        var detailBtn = document.createElement('button');
-        var detailAttr = "detail(" + item.id + ')';
-        detailBtn.setAttribute("type", "button");
-        detailBtn.setAttribute("class", "btn btn-info btn-sm 查看");
-        detailBtn.setAttribute("onclick", detailAttr);
-        detailBtn.innerHTML = "查看"
-        btnGroup.appendChild(detailBtn)
         //修改按钮
         var editBtn = document.createElement('button');
         var editAttr = 'edit(' + item.id + ')';
         editBtn.setAttribute("type", "button");
         editBtn.setAttribute("class", "btn btn-warning btn-sm 修改");
         editBtn.setAttribute("onclick", editAttr);
-        editBtn.innerHTML = "修改"
+        editBtn.innerHTML = "审核"
         btnGroup.appendChild(editBtn)
         //删除按钮
         var deleteBtn = document.createElement('button');
@@ -438,7 +422,7 @@
             } else {
                 paramArray.push(id);
             }
-            httpJson("xitonggonggao/delete", "POST", paramArray, (res) => {
+            httpJson("liuyanxinxi/delete", "POST", paramArray, (res) => {
                 if(res.code == 0
         )
             {
@@ -456,11 +440,11 @@
     // 用户登出
     <%@ include file="../../static/logout.jsp"%>
 
-            //修改
-            function edit(id) {
-                window.sessionStorage.setItem('updateId', id)
-                window.location.href = "add-or-update.jsp"
-            }
+    //修改
+    function edit(id) {
+        window.sessionStorage.setItem('updateId', id)
+        window.location.href = "add-or-update.jsp"
+    }
 
     //清除会重复渲染的节点
     function clear() {
@@ -482,8 +466,8 @@
 
     //单列求和
     function getSum(colName) {
-        http("xitonggonggao" + colName, "GET", {
-            tableName: "xitonggonggao",
+        http("liuyanxinxi" + colName, "GET", {
+            tableName: "liuyanxinxi",
             columnName: colName
         }, (res) => {
             if(res.code == 0
@@ -503,14 +487,15 @@
     }
 
     //填充搜索下拉框
+                 
              
-            
+
 
     //查询当前页面下所有列表
     //跨表
     function crossTable(id, crossTableName) {
         window.sessionStorage.setItem('crossTableId', id);
-        window.sessionStorage.setItem('crossTableName', "xitonggonggao");
+        window.sessionStorage.setItem('crossTableName', "liuyanxinxi");
         var url = "../" + crossTableName + "/add-or-update.jsp";
         window.location.href = url;
     }
@@ -534,8 +519,9 @@
 
 
         //下拉框赋值
+                                                 
                                      
-                                    
+
     <%@ include file="../../static/myInfo.js"%>
     });
 </script>
