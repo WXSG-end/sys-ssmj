@@ -12,6 +12,67 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/xznstatic/css/style.default.css" id="theme-stylesheet">
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets2/js/jquery.min.js"></script>
+    <style>
+        /* ===== 登录页：背景图 + 模糊 + 遮罩 ===== */
+        :root{
+            --ly-blue-1: #A5D8FF;  /* 浅蓝（更浅） */
+            --ly-blue-2: #74C0FC;  /* 浅蓝（稍深） */
+            --ly-blue-3: #339AF0;  /* 按钮蓝（浅蓝系主色） */
+        }
+
+        html, body { height: 100%; }
+
+        /* 你的页面 body 里是：<div class="page login-page"> ... */
+        .page.login-page{
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background: transparent !important;
+        }
+
+        /* 背景图层 */
+        .page.login-page::before{
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url("${pageContext.request.contextPath}/upload/login-bg.jpg") center/cover no-repeat;
+            filter: blur(10px);         /* 模糊强度：0~20，想更清晰就改小，比如 6 */
+            transform: scale(1.06);     /* 防止模糊后四周露白 */
+            z-index: -2;
+        }
+
+        /* 遮罩层（让登录框更清楚） */
+        .page.login-page::after{
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.18); /* 越大越暗：0~0.35 */
+            z-index: -1;
+        }
+
+        /* ===== 左侧色块改成“浅蓝” ===== */
+        .page.login-page .info{
+            background: linear-gradient(135deg, var(--ly-blue-2) 0%, var(--ly-blue-1) 100%) !important;
+            color: #fff;
+        }
+
+        /* ===== 登录按钮改成浅蓝系（和左侧统一）===== */
+        .page.login-page .btn.btn-primary{
+            background: var(--ly-blue-3) !important;
+            border-color: var(--ly-blue-3) !important;
+        }
+        .page.login-page .btn.btn-primary:hover{
+            filter: brightness(0.95);
+        }
+
+        /* 确保内容在背景上方 */
+        .page.login-page .container,
+        .page.login-page .form-holder{
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+
 </head>
 
 <body>
