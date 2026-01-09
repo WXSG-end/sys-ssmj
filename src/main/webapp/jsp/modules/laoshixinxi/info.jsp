@@ -84,25 +84,20 @@
                         <h3 class="widget-title">信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
-                                    <input id="updateId" name="id" type="hidden">
-                                    <div class="form-group col-md-6">
-                                        <label>用户名称</label>
+                                <input id="updateId" name="id" type="hidden">
+                                <div class="form-group col-md-6">
+                                    <label>用户名称</label>
 
-                                        <input id="name" name="name" class="form-control"
-                                               v-model="ruleForm.name" readonly>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>账号</label>
+                                    <input id="name" name="name" class="form-control"
+                                           v-model="ruleForm.name" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>账号</label>
 
-                                        <input id="account" name="account" class="form-control"
-                                               v-model="ruleForm.account" readonly>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>密码</label>
+                                    <input id="account" name="account" class="form-control"
+                                           v-model="ruleForm.account" readonly>
+                                </div>
 
-                                        <input id="password" name="password" class="form-control"
-                                               v-model="ruleForm.password" readonly>
-                                    </div>
                                 <div class="form-group col-md-6">
                                     <label>头像</label>
                                     <img id="imgPhotoImg" width="100" height="100">
@@ -115,12 +110,12 @@
                                         >
                                     </label>
                                 </div>
-                                    <div class="form-group col-md-6">
-                                        <label>身份</label>
+                                <div class="form-group col-md-6">
+                                    <label>身份</label>
 
-                                        <input id="role" name="role" class="form-control"
-                                               v-model="ruleForm.role" readonly>
-                                    </div>
+                                    <input id="role" name="role" class="form-control"
+                                           v-model="ruleForm.role" readonly>
+                                </div>
                                 <div class="form-group col-md-12 mb-3">
                                     <button id="exitBtn" type="button" class="btn btn-primary btn-lg">返回</button>
                                 </div>
@@ -147,8 +142,8 @@
 
 <script>
     <%@ include file="../../utils/menu.jsp"%>
-            <%@ include file="../../static/setMenu.js"%>
-            <%@ include file="../../utils/baseUrl.jsp"%>
+    <%@ include file="../../static/setMenu.js"%>
+    <%@ include file="../../utils/baseUrl.jsp"%>
 
     var tableName = "laoshixinxi";
     var pageType = "add-or-update";
@@ -175,7 +170,7 @@
                         if (res.code == 0) {
                             vm.ruleForm = res.data;
                         } else if (res.code == 401) {
-                        <%@ include file="../../static/toLogin.jsp"%>
+                            <%@ include file="../../static/toLogin.jsp"%>
                         } else {
                             alert(res.msg)
                         }
@@ -187,20 +182,20 @@
     });
 
     //查询当前页面下所有列表
-        function sexTypesSelect() {
-            //填充下拉框选项
-            http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=sex_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    sexTypesOptions = res.data.list;
+    function sexTypesSelect() {
+        //填充下拉框选项
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=sex_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                sexTypesOptions = res.data.list;
             }
         });
-        }
+    }
     // 下拉框选项回显
     function setSelectOption() {
         for (var i = 0; i < sexTypesOptions.length; i++) {
             if(sexTypesOptions[i].codeIndex == ruleForm.sexTypes){//下拉框value对比,如果一致就赋值汉字
                 var sexTypesSelect = document.getElementById("sexTypesSelect");
-                    sexTypesSelect.value = sexTypesOptions[i].indexName;
+                sexTypesSelect.value = sexTypesOptions[i].indexName;
             }
         }
     }
@@ -233,7 +228,7 @@
                         setSelectOption();
                         // setDownloadBtn();
                     } else if (res.code == 401) {
-                    <%@ include file="../../static/toLogin.jsp"%>
+                        <%@ include file="../../static/toLogin.jsp"%>
                     } else {
                         alert(res.msg);
                     }
@@ -292,7 +287,7 @@
 
         getDetails();
 
-    <%@ include file="../../static/myInfo.js"%>
+        <%@ include file="../../static/myInfo.js"%>
     });
     // 用户登出
     <%@ include file="../../static/logout.jsp"%>

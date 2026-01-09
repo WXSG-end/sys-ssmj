@@ -86,22 +86,22 @@
                         <h3 class="widget-title">资源信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
-                                    <input id="updateId" name="id" type="hidden">
-                                    <div class="form-group col-md-6">
-                                        <label>资源名称</label>
-                                        <input id="serial" name="serial" class="form-control"
-                                               placeholder="资源名称">
-                                    </div>
-                                   <div class="form-group col-md-6">
-                                       <label>资源类别</label>
-                                       <select id="lxTypesSelect" name="lxTypes" class="form-control">
-                                       </select>
-                                   </div>
-                                   <div class="form-group col-md-6">
-                                       <label>所属实验室</label>
-                                       <select id="zyTypesSelect" name="zyTypes" class="form-control">
-                                       </select>
-                                   </div>
+                                <input id="updateId" name="id" type="hidden">
+                                <div class="form-group col-md-6">
+                                    <label>资源名称</label>
+                                    <input id="serial" name="serial" class="form-control"
+                                           placeholder="资源名称">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>资源类别</label>
+                                    <select id="lxTypesSelect" name="lxTypes" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>所属实验室</label>
+                                    <select id="zyTypesSelect" name="zyTypes" class="form-control">
+                                    </select>
+                                </div>
                                 <div class="form-group col-md-6">
                                     <label>资源类型（设备/耗材）</label>
                                     <select id="resourceTypesSelect" name="resourceTypes" class="form-control">
@@ -120,7 +120,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label>预警阈值（耗材）</label>
-                                    <input id="threshold" name="threshold" class="form-control" placeholder="例如：10（低于10预警）">
+                                    <input id="threshold" name="threshold" class="form-control"
+                                           placeholder="例如：10（低于10预警）">
                                 </div>
 
                                 <div class="form-group col-md-12 mb-3">
@@ -173,13 +174,10 @@
     var zyTypesOptions = [];
     var resourceTypesOptions = [];
 
-
-    var ruleForm = {};
+    // 注意：这个 vm 在当前页面其实没参与数据回显逻辑，但为了不影响你原项目结构，这里保留
     var vm = new Vue({
         el: '#addOrUpdateForm',
-        data: {
-            ruleForm: {},
-        },
+        data: { ruleForm: {} },
         beforeCreate: function () {
             var id = window.sessionStorage.getItem("updateId");
             if (id != null && id != "" && id != "null") {
@@ -193,7 +191,7 @@
                         if (res.code == 0) {
                             vm.ruleForm = res.data;
                         } else if (res.code == 401) {
-                        <%@ include file="../../static/toLogin.jsp"%>
+                            <%@ include file="../../static/toLogin.jsp"%>
                         } else {
                             alert(res.msg)
                         }
@@ -205,9 +203,7 @@
     });
 
     // 文件上传
-    function upload() {
-
-    }
+    function upload() {}
 
     // 表单提交
     function submit() {
@@ -218,7 +214,7 @@
             $.each(value, function (index, item) {
                 data[item.name] = item.value;
             });
-            let json = JSON.stringify(data);
+
             var urlParam;
             var successMes = '';
             if (updateId != null && updateId != "null" && updateId != '') {
@@ -228,135 +224,124 @@
                 urlParam = 'save';
                 successMes = '添加成功';
             }
-            httpJson("yiqi/" + urlParam, "POST", data, (res) => {
-                if(res.code == 0
-        )
-            {
-                window.sessionStorage.removeItem('id');
-                let flag = true;
-                if (flag) {
-                    alert(successMes);
-                }
-                if (window.sessionStorage.getItem('onlyme') != null && window.sessionStorage.getItem('onlyme') == "true") {
-                    window.sessionStorage.removeItem('onlyme');
-                    window.parent.location.href = "${pageContext.request.contextPath}/index.jsp";
-                } else {
-                    window.location.href = "list.jsp";
-                }
 
-            }
-        })
-            ;
+            httpJson("yiqi/" + urlParam, "POST", data, (res) => {
+                if (res.code == 0) {
+                    window.sessionStorage.removeItem('id');
+                    alert(successMes);
+
+                    if (window.sessionStorage.getItem('onlyme') != null && window.sessionStorage.getItem('onlyme') == "true") {
+                        window.sessionStorage.removeItem('onlyme');
+                        window.parent.location.href = "${pageContext.request.contextPath}/index.jsp";
+                    } else {
+                        window.location.href = "list.jsp";
+                    }
+                } else if (res.code == 401) {
+                    <%@ include file="../../static/toLogin.jsp"%>
+                } else {
+                    alert(res.msg || "提交失败");
+                }
+            });
         } else {
             alert("表单未填完整或有错误");
         }
     }
 
-    //查询当前页面下所有列表
-        function lxTypesSelect() {
-            //填充下拉框选项
-            http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=lx_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    lxTypesOptions = res.data.list;
-            }
-        });
-        }
-        function zyTypesSelect() {
-            //填充下拉框选项
-            http("zhuanye/page?page=1&limit=100&sort=&order=&dicCode=zy_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    zyTypesOptions = res.data.list;
-            }
-        });
-        }
-
-    function resourceTypesSelect() {
-        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=resource_types", "GET", {}, (res) => {
-            if(res.code == 0){
-                resourceTypesOptions = res.data.list;
+    // ======== 下拉框数据查询（改：拉到数据后再渲染 option，再回显） ========
+    function lxTypesSelect() {
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=lx_types", "GET", {}, (res) => {
+            if (res.code == 0) {
+                lxTypesOptions = res.data.list || [];
+                initializationLxtypesSelect();
+                setSelectOption();
             }
         });
     }
 
-    //初始化下拉框
-    function initializationLxtypesSelect(){
+    function zyTypesSelect() {
+        // 所属实验室来自实验室表（你项目里还是 zhuanye 表）
+        http("zhuanye/page?page=1&limit=100&sort=&order=", "GET", {}, (res) => {
+            if (res.code == 0) {
+                zyTypesOptions = res.data.list || [];
+                initializationZytypesSelect();
+                setSelectOption();
+            }
+        });
+    }
+
+    function resourceTypesSelect() {
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=resource_types", "GET", {}, (res) => {
+            if (res.code == 0) {
+                resourceTypesOptions = res.data.list || [];
+                initializationResourceTypesSelect();
+                setSelectOption();
+            }
+        });
+    }
+
+    // ======== 初始化下拉框（改：先清空，防止重复叠加） ========
+    function initializationLxtypesSelect() {
         var lxTypesSelect = document.getElementById('lxTypesSelect');
-            for (var i = 0; i < lxTypesOptions.length; i++) {
-                lxTypesSelect.add(new Option(lxTypesOptions[i].indexName,lxTypesOptions[i].codeIndex));
-            }
+        lxTypesSelect.options.length = 0;
+        for (var i = 0; i < lxTypesOptions.length; i++) {
+            lxTypesSelect.add(new Option(lxTypesOptions[i].indexName, lxTypesOptions[i].codeIndex));
+        }
     }
-    function initializationZytypesSelect(){
+
+    function initializationZytypesSelect() {
         var zyTypesSelect = document.getElementById('zyTypesSelect');
-            for (var i = 0; i < zyTypesOptions.length; i++) {
-                zyTypesSelect.add(new Option(zyTypesOptions[i].serial,zyTypesOptions[i].id));
-            }
+        zyTypesSelect.options.length = 0;
+        for (var i = 0; i < zyTypesOptions.length; i++) {
+            zyTypesSelect.add(new Option(zyTypesOptions[i].serial, zyTypesOptions[i].id));
+        }
     }
-    function initializationResourceTypesSelect(){
+
+    function initializationResourceTypesSelect() {
         var resourceTypesSelect = document.getElementById('resourceTypesSelect');
+        resourceTypesSelect.options.length = 0;
         for (var i = 0; i < resourceTypesOptions.length; i++) {
             resourceTypesSelect.add(new Option(resourceTypesOptions[i].indexName, resourceTypesOptions[i].codeIndex));
         }
     }
 
-
-
-    // 下拉框选项回显
+    // ======== 下拉框选项回显（修复版：避免你原来那段 i 重复/大括号错位导致 JS 报错） ========
     function setSelectOption() {
-        for (var i = 0; i < lxTypesOptions.length; i++) {
-            if(lxTypesOptions[i].codeIndex == ruleForm.lxTypes){//下拉框value对比,如果一致就赋值汉字
-                document.getElementById("lxTypesSelect").options[i].selected = true;
-            }
+        if (!ruleForm) return;
+
+        if (ruleForm.lxTypes != null) {
+            $("#lxTypesSelect").val(String(ruleForm.lxTypes));
         }
-        for (var i = 0; i < zyTypesOptions.length; i++) {
-            if(zyTypesOptions[i].id == ruleForm.zyTypes)
-                for (var i = 0; i < resourceTypesOptions.length; i++) {
-                    if(resourceTypesOptions[i].codeIndex == ruleForm.resourceTypes){
-                        document.getElementById("resourceTypesSelect").options[i].selected = true;
-                    }
-                }
-            {//下拉框value对比,如果一致就赋值汉字
-                document.getElementById("zyTypesSelect").options[i].selected = true;
-            }
+        if (ruleForm.zyTypes != null) {
+            $("#zyTypesSelect").val(String(ruleForm.zyTypes));
+        }
+        if (ruleForm.resourceTypes != null) {
+            $("#resourceTypesSelect").val(String(ruleForm.resourceTypes));
         }
     }
-
 
     // 填充富文本框
-    function setContent() {
-    }
+    function setContent() {}
 
     // 获取富文本框内容
-    function getContent() {
-
-    }
-
-    //搜素输入检查
-            function idChickValue(e){
-                var this_val = e.value || 0;
-                var reg=/^[0-9]*$/;
-                if(!reg.test(this_val)){
-                    e.value = "";
-                    alert("输入不合法");
-                    return false;
-                }
-            }
+    function getContent() {}
 
     function exit() {
         window.sessionStorage.removeItem("updateId");
         window.location.href = "list.jsp";
     }
+
     // 表单校验
     function validform() {
         return $("#addOrUpdateForm").validate({
             rules: {
                 serial: {},
                 lxTypes: {},
-                zyTypes: {},
+                zyTypes: {}
             },
             messages: {
                 serial: {},
                 lxTypes: {},
-                zyTypes: {},
+                zyTypes: {}
             }
         }).form();
     }
@@ -379,49 +364,48 @@
         if (id != null && id != "" && id != "null") {
             updateId = id;
             window.sessionStorage.removeItem('updateId');
+
             http("yiqi/info/" + id, "GET", {}, (res) => {
-                if(res.code == 0
-        )
-            {
-                ruleForm = res.data
-                // 是/否下拉框回显
-                setSelectOption();
-                // 设置图片src
-                showImg();
-                // 数据填充
-                dataBind();
-                // 富文本框回显
-                setContent();
-                //注册表单验证
-                $(validform());
-            }
-        })
-            ;
+                if (res.code == 0) {
+                    ruleForm = res.data;
+
+                    // ★先填输入框（库存/单位/阈值等）
+                    dataBind();
+
+                    // ★再回显下拉框（依赖 option 已渲染；如果 option 还没回来，稍后回调里也会 setSelectOption）
+                    setSelectOption();
+
+                    // 设置图片src
+                    showImg();
+
+                    // 富文本框回显
+                    setContent();
+
+                    //注册表单验证
+                    $(validform());
+                } else if (res.code == 401) {
+                    <%@ include file="../../static/toLogin.jsp"%>
+                } else {
+                    alert(res.msg || "获取详情失败");
+                }
+            });
         } else {
-
-
-            //注册表单验证
             $(validform());
         }
     }
 
-    // 关联下拉框改变
-    function lvSelectChange(level) {
-        let data = {};
-        let value = $('#addOrUpdateForm').serializeArray();
-        $.each(value, function (index, item) {
-            data[item.name] = item.value;
-        });
+    function dataBind() {
+        $("#updateId").val(ruleForm.id);
+        $("#serial").val(ruleForm.serial);
 
+        // ★库存/单位/阈值回显
+        $("#stock").val(ruleForm.stock);
+        $("#unit").val(ruleForm.unit);
+        $("#threshold").val(ruleForm.threshold);
     }
 
-    // 清除可能会重复渲染的selection
-    function clear(className) {
-        var elements = document.getElementsByClassName(className);
-        for (var i = elements.length - 1; i >= 0; i--) {
-            elements[i].parentNode.removeChild(elements[i]);
-        }
-    }
+    //图片显示
+    function showImg() {}
 
     function dateTimePick() {
         $.fn.datetimepicker.dates['zh-CN'] = {
@@ -436,48 +420,7 @@
         };
     }
 
-    function calculation() {
-        //积
-        var x = 0;
-        //和
-        var y = 0;
-        var flag = 0;
-    }
-
-    function calculationSE(colName) {
-        //单列求和接口
-        http("zhiburizhi" + colName, "GET", {
-            tableName: "zhiburizhi",
-            columnName: colName
-        }, (res) => {
-            if(res.code == 0
-    )
-        {
-            $("#" + colName).attr("value", res.data);
-        }
-    })
-        ;
-    }
-
-    function calculationPre() {
-        //进入该页面就填充"单列求和"的列
-    }
-
-
-
-
-    function dataBind() {
-        $("#updateId").val(ruleForm.id);
-        $("#serial").val(ruleForm.serial);
-        $("#stock").val(ruleForm.stock);
-        $("#unit").val(ruleForm.unit);
-        $("#threshold").val(ruleForm.threshold);
-    }
-
-    //图片显示
-    function showImg() {
-    }
-
+    function calculationPre() {}
 
     $(document).ready(function () {
         //设置右上角用户名
@@ -486,42 +429,39 @@
         $('.sidebar-header h3 a').html(projectName)
         //设置导航栏菜单
         setMenu();
+
         $('#exitBtn').on('click', function (e) {
             e.preventDefault();
             exit();
         });
-        //初始化时间插件
+
         dateTimePick();
-        //添加表单校验信息文本
         addValidation();
-        //查询当前页面所有下拉框
+
+        // 拉下拉框数据（回调里会渲染 option 并回显）
         lxTypesSelect();
         zyTypesSelect();
         resourceTypesSelect();
 
-        // 初始化下拉框
-        initializationLxtypesSelect();
-        initializationZytypesSelect();
-        initializationResourceTypesSelect();
-
+        // 取详情并回显
         getDetails();
-        //初始化上传按钮
+
         upload();
-        //单列求和
         calculationPre();
-    <%@ include file="../../static/myInfo.js"%>
-                $('#submitBtn').on('click', function (e) {
-                    e.preventDefault();
-                    //console.log("点击了...提交按钮");
-                    submit();
-                });
+
+        <%@ include file="../../static/myInfo.js"%>
+
+        $('#submitBtn').on('click', function (e) {
+            e.preventDefault();
+            submit();
+        });
+
         readonly();
     });
 
     function readonly() {
         if (window.sessionStorage.getItem('role') != '管理员') {
             $('#jifen').attr('readonly', 'readonly');
-            //$('#money').attr('readonly', 'readonly');
         }
     }
 
@@ -538,10 +478,8 @@
         return true;
     }
 
-
     // 用户登出
     <%@ include file="../../static/logout.jsp"%>
 </script>
 </body>
-
 </html>

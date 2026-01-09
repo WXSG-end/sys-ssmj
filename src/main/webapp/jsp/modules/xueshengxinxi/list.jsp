@@ -73,12 +73,12 @@
                         <h3 class="widget-title">列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
-                                                                 
-                                        <label>
-                                            <input type="text" id="nameSearch" class="form-control form-control-sm"
-                                                   placeholder="学生名称" aria-controls="tableId">
-                                        </label>
-                                                                                                                                                                
+
+                                <label>
+                                    <input type="text" id="nameSearch" class="form-control form-control-sm"
+                                           placeholder="学生名称" aria-controls="tableId">
+                                </label>
+
                                 <button onclick="search()" type="button" class="btn btn-primary">查询</button>
                                 </br>
                                 <button onclick="add()" type="button" class="btn btn-success 新增">添加</button>
@@ -97,7 +97,6 @@
                                     </th>
                                     <th onclick="sort('name')">学生名称</th>
                                     <th onclick="sort('account')">账号</th>
-                                    <th onclick="sort('password')">密码</th>
                                     <th>头像</th>
                                     <th onclick="sort('sexTypes')">性别</th>
                                     <th>操作</th>
@@ -153,10 +152,10 @@
 
 <script>
     <%@ include file="../../utils/menu.jsp"%>
-            <%@ include file="../../static/setMenu.js"%>
-            <%@ include file="../../utils/baseUrl.jsp"%>
-            <%@ include file="../../static/getRoleButtons.js"%>
-            <%@ include file="../../static/crossBtnControl.js"%>
+    <%@ include file="../../static/setMenu.js"%>
+    <%@ include file="../../utils/baseUrl.jsp"%>
+    <%@ include file="../../static/getRoleButtons.js"%>
+    <%@ include file="../../static/crossBtnControl.js"%>
     var tableName = "xueshengxinxi";
     var pageType = "list";
     var searchForm = {key: ""};
@@ -169,7 +168,7 @@
     var ids = [];
     var checkAll = false;
 
-            var sexTypesOptions = [];
+    var sexTypesOptions = [];
 
     function init() {
         // 满足条件渲染提醒接口
@@ -188,12 +187,12 @@
     // 查询
     function search() {
         searchForm = {key: ""};
-         
+
         if ($('#nameSearch').val() != null && $('nameSearch').val() != '') {
             searchForm.name = $('#nameSearch').val();
 
         }
-                            getDataList();
+        getDataList();
     }
 
     // 获取数据列表
@@ -203,8 +202,8 @@
             limit: pageSize,
             sort: sortColumn,
             order: sortOrder,
-                    name: searchForm.name,
-    }, (res) => {
+            name: searchForm.name,
+        }, (res) => {
             if(res.code == 0
             )
             {
@@ -253,11 +252,6 @@
         var accountCell = document.createElement('td');
         accountCell.innerHTML = item.account;
         row.appendChild(accountCell);
-
-        var passwordCell = document.createElement('td');
-        passwordCell.innerHTML = item.password;
-        row.appendChild(passwordCell);
-
         var imgPhotoCell = document.createElement('td');
 
         var imgPhotoImg = document.createElement('img');
@@ -270,7 +264,7 @@
         var sexTypesCell = document.createElement('td');
         for (var i = 0; i < sexTypesOptions.length; i++) {
             if(sexTypesOptions[i].codeIndex == item.sexTypes){//下拉框value对比,如果一致就赋值汉字
-                    sexTypesCell.innerHTML = sexTypesOptions[i].indexName;
+                sexTypesCell.innerHTML = sexTypesOptions[i].indexName;
             }
         }
         row.appendChild(sexTypesCell);
@@ -451,12 +445,12 @@
             }
             httpJson("xueshengxinxi/delete", "POST", paramArray, (res) => {
                 if(res.code == 0
-        )
-            {
-                getDataList();
-                alert('删除成功');
-            }
-        })
+                )
+                {
+                    getDataList();
+                    alert('删除成功');
+                }
+            })
             ;
         }
         else {
@@ -467,11 +461,11 @@
     // 学生登出
     <%@ include file="../../static/logout.jsp"%>
 
-            //修改
-            function edit(id) {
-                window.sessionStorage.setItem('updateId', id)
-                window.location.href = "add-or-update.jsp"
-            }
+    //修改
+    function edit(id) {
+        window.sessionStorage.setItem('updateId', id)
+        window.location.href = "add-or-update.jsp"
+    }
 
     //清除会重复渲染的节点
     function clear() {
@@ -498,11 +492,11 @@
             columnName: colName
         }, (res) => {
             if(res.code == 0
-    )
-        {
-            return res.data.sum;
-        }
-    })
+            )
+            {
+                return res.data.sum;
+            }
+        })
         ;
     }
 
@@ -514,18 +508,18 @@
     }
 
     //填充搜索下拉框
-         
-                    
+
+
 
     //查询当前页面下所有列表
-        function sexTypesSelect() {
-            //填充下拉框选项
-            http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=sex_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    sexTypesOptions = res.data.list;
+    function sexTypesSelect() {
+        //填充下拉框选项
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=sex_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                sexTypesOptions = res.data.list;
             }
         });
-        }
+    }
     //跨表
     function crossTable(id, crossTableName) {
         window.sessionStorage.setItem('crossTableId', id);
@@ -554,9 +548,9 @@
 
 
         //下拉框赋值
-                         
-                                                            
-    <%@ include file="../../static/myInfo.js"%>
+
+
+        <%@ include file="../../static/myInfo.js"%>
     });
 </script>
 </body>

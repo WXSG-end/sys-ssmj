@@ -86,34 +86,34 @@
                         <h3 class="widget-title">信息</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
-                                    <input id="updateId" name="id" type="hidden">
-                                    <div class="form-group col-md-6">
-                                        <label>学生名称</label>
-                                        <input id="name" name="name" class="form-control"
-                                               placeholder="学生名称">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>账号</label>
-                                        <input id="account" name="account" class="form-control"
-                                               placeholder="账号">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>密码</label>
-                                        <input id="password" name="password" class="form-control"
-                                               placeholder="密码">
-                                    </div>
-                                   <div class="form-group col-md-6">
-                                       <label>头像</label>
-                                       <img id="imgPhotoImg" src="" width="100" height="100">
-                                       <input name="file" type="file" id="imgPhotoupload"
-                                              class="form-control-file">
-                                       <input name="imgPhoto" id="imgPhoto" type="hidden">
-                                   </div>
-                                   <div class="form-group col-md-6">
-                                       <label>性别</label>
-                                       <select id="sexTypesSelect" name="sexTypes" class="form-control">
-                                       </select>
-                                   </div>
+                                <input id="updateId" name="id" type="hidden">
+                                <div class="form-group col-md-6">
+                                    <label>学生名称</label>
+                                    <input id="name" name="name" class="form-control"
+                                           placeholder="学生名称">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>账号</label>
+                                    <input id="account" name="account" class="form-control"
+                                           placeholder="账号">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>重置密码</label>
+                                    <input id="password" name="password" type="password" class="form-control"
+                                           placeholder="留空则不修改（新增时必填）">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>头像</label>
+                                    <img id="imgPhotoImg" src="" width="100" height="100">
+                                    <input name="file" type="file" id="imgPhotoupload"
+                                           class="form-control-file">
+                                    <input name="imgPhoto" id="imgPhoto" type="hidden">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>性别</label>
+                                    <select id="sexTypesSelect" name="sexTypes" class="form-control">
+                                    </select>
+                                </div>
                                 <div class="form-group col-md-12 mb-3">
                                     <button id="exitBtn" type="button" class="btn btn-primary btn-lg">返回</button>
                                     <button id="submitBtn" type="button" class="btn btn-primary btn-lg">提交</button>
@@ -162,6 +162,9 @@
 
     var sexTypesOptions = [];
 
+    // 表单验证器（避免页面加载就出现红色提示）
+    var validator = null;
+
     var ruleForm = {};
     var vm = new Vue({
         el: '#addOrUpdateForm',
@@ -181,7 +184,7 @@
                         if (res.code == 0) {
                             vm.ruleForm = res.data;
                         } else if (res.code == 401) {
-                        <%@ include file="../../static/toLogin.jsp"%>
+                            <%@ include file="../../static/toLogin.jsp"%>
                         } else {
                             alert(res.msg)
                         }
@@ -216,6 +219,14 @@
             $.each(value, function (index, item) {
                 data[item.name] = item.value;
             });
+
+            // 编辑时如果不想改密码，可以留空；此时不把 password 传给后端，避免覆盖成空
+            if (updateId != null && updateId != "null" && updateId != '') {
+                if (data.password == null || $.trim(data.password) === '') {
+                    delete data.password;
+                }
+            }
+
             let json = JSON.stringify(data);
             var urlParam;
             var successMes = '';
@@ -228,22 +239,22 @@
             }
             httpJson("xueshengxinxi/" + urlParam, "POST", data, (res) => {
                 if(res.code == 0
-        )
-            {
-                window.sessionStorage.removeItem('id');
-                let flag = true;
-                if (flag) {
-                    alert(successMes);
-                }
-                if (window.sessionStorage.getItem('onlyme') != null && window.sessionStorage.getItem('onlyme') == "true") {
-                    window.sessionStorage.removeItem('onlyme');
-                    window.parent.location.href = "${pageContext.request.contextPath}/index.jsp";
-                } else {
-                    window.location.href = "list.jsp";
-                }
+                )
+                {
+                    window.sessionStorage.removeItem('id');
+                    let flag = true;
+                    if (flag) {
+                        alert(successMes);
+                    }
+                    if (window.sessionStorage.getItem('onlyme') != null && window.sessionStorage.getItem('onlyme') == "true") {
+                        window.sessionStorage.removeItem('onlyme');
+                        window.parent.location.href = "${pageContext.request.contextPath}/index.jsp";
+                    } else {
+                        window.location.href = "list.jsp";
+                    }
 
-            }
-        })
+                }
+            })
             ;
         } else {
             alert("表单未填完整或有错误");
@@ -251,21 +262,21 @@
     }
 
     //查询当前页面下所有列表
-        function sexTypesSelect() {
-            //填充下拉框选项
-            http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=sex_types", "GET", {}, (res) => {
-                if(res.code == 0){
-                    sexTypesOptions = res.data.list;
+    function sexTypesSelect() {
+        //填充下拉框选项
+        http("dictionary/page?page=1&limit=100&sort=&order=&dicCode=sex_types", "GET", {}, (res) => {
+            if(res.code == 0){
+                sexTypesOptions = res.data.list;
             }
         });
-        }
+    }
 
     //初始化下拉框
     function initializationSextypesSelect(){
         var sexTypesSelect = document.getElementById('sexTypesSelect');
-            for (var i = 0; i < sexTypesOptions.length; i++) {
-                sexTypesSelect.add(new Option(sexTypesOptions[i].indexName,sexTypesOptions[i].codeIndex));
-            }
+        for (var i = 0; i < sexTypesOptions.length; i++) {
+            sexTypesSelect.add(new Option(sexTypesOptions[i].indexName,sexTypesOptions[i].codeIndex));
+        }
     }
     // 下拉框选项回显
     function setSelectOption() {
@@ -287,43 +298,51 @@
     }
 
     //搜素输入检查
-            function idChickValue(e){
-                var this_val = e.value || 0;
-                var reg=/^[0-9]*$/;
-                if(!reg.test(this_val)){
-                    e.value = "";
-                    alert("输入不合法");
-                    return false;
-                }
-            }
+    function idChickValue(e){
+        var this_val = e.value || 0;
+        var reg=/^[0-9]*$/;
+        if(!reg.test(this_val)){
+            e.value = "";
+            alert("输入不合法");
+            return false;
+        }
+    }
 
     function exit() {
         window.sessionStorage.removeItem("updateId");
         window.location.href = "list.jsp";
     }
-    // 表单校验
-    function validform() {
-        return $("#addOrUpdateForm").validate({
+    // 初始化表单校验（只初始化，不立即触发校验提示）
+    function initValidform() {
+        if (validator != null) {
+            return;
+        }
+        validator = $("#addOrUpdateForm").validate({
             rules: {
                 name: {},
                 account: {},
-                password: {},
+                // 新增必须填；编辑可留空（留空则不修改密码）
+                password: {
+                    required: function () {
+                        return !(updateId != null && updateId != "null" && updateId != '');
+                    }
+                },
                 imgPhoto: {},
-                sexTypes: {},
-                role: {},
+                sexTypes: {}
             },
             messages: {
-                name: {},
-                account: {},
-                password: {},
-                imgPhoto: {},
-                sexTypes: {},
-                role: {},
+                password: {
+                    required: "请输入密码"
+                }
             }
-        }).form();
+        });
     }
 
-    // 添加表单校验方法
+    // 表单校验（提交时调用）
+    function validform() {
+        initValidform();
+        return validator.form();
+    }// 添加表单校验方法
     function addValidation() {
         jQuery.validator.addMethod("isPhone", function (value, element) {
             var length = value.length;
@@ -343,27 +362,27 @@
             window.sessionStorage.removeItem('updateId');
             http("xueshengxinxi/info/" + id, "GET", {}, (res) => {
                 if(res.code == 0
-        )
-            {
-                ruleForm = res.data
-                // 是/否下拉框回显
-                setSelectOption();
-                // 设置图片src
-                showImg();
-                // 数据填充
-                dataBind();
-                // 富文本框回显
-                setContent();
-                //注册表单验证
-                $(validform());
-            }
-        })
+                )
+                {
+                    ruleForm = res.data
+                    // 是/否下拉框回显
+                    setSelectOption();
+                    // 设置图片src
+                    showImg();
+                    // 数据填充
+                    dataBind();
+                    // 富文本框回显
+                    setContent();
+                    //注册表单验证
+                    initValidform();
+                }
+            })
             ;
         } else {
 
 
             //注册表单验证
-            $(validform());
+            initValidform();
         }
     }
 
@@ -413,11 +432,11 @@
             columnName: colName
         }, (res) => {
             if(res.code == 0
-    )
-        {
-            $("#" + colName).attr("value", res.data);
-        }
-    })
+            )
+            {
+                $("#" + colName).attr("value", res.data);
+            }
+        })
         ;
     }
 
@@ -458,7 +477,9 @@
         dateTimePick();
         //添加表单校验信息文本
         addValidation();
-        //查询当前页面所有下拉框
+        // 初始化表单校验器（不触发提示）
+        initValidform();
+//查询当前页面所有下拉框
         sexTypesSelect();
 
         // 初始化下拉框
@@ -468,12 +489,12 @@
         upload();
         //单列求和
         calculationPre();
-    <%@ include file="../../static/myInfo.js"%>
-                $('#submitBtn').on('click', function (e) {
-                    e.preventDefault();
-                    //console.log("点击了...提交按钮");
-                    submit();
-                });
+        <%@ include file="../../static/myInfo.js"%>
+        $('#submitBtn').on('click', function (e) {
+            e.preventDefault();
+            //console.log("点击了...提交按钮");
+            submit();
+        });
         readonly();
     });
 
