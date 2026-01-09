@@ -56,7 +56,7 @@
         <div class="container mt-0">
             <div class="row breadcrumb-bar">
                 <div class="col-md-6">
-                    <h3 class="block-title">编辑</h3>
+                    <h3 class="block-title">实验数据</h3>
                 </div>
                 <div class="col-md-6">
                     <ol class="breadcrumb">
@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">管理</li>
-                        <li class="breadcrumb-item active">登记</li>
+                        <li class="breadcrumb-item active">实验数据详情</li>
                     </ol>
                 </div>
             </div>
@@ -81,42 +81,42 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">信息</h3>
+                        <h3 class="widget-title">实验数据详情</h3>
                         <form id="addOrUpdateForm">
                             <div class="form-row">
                                     <input id="updateId" name="id" type="hidden">
                                     <div class="form-group col-md-6">
-                                        <label>预约审核内容</label>
+                                        <label>实验数据内容</label>
 
                                         <input id="note" name="note" class="form-control"
                                                v-model="ruleForm.note" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>申请人</label>
+                                        <label>记录人</label>
 
                                         <input id="yhnote" name="yhnote" class="form-control"
                                                v-model="ruleForm.yhnote" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>申请时间 </label>
+                                        <label>记录时间 </label>
 
                                         <input id="noteTime" name="noteTime" class="form-control"
                                                v-model="ruleForm.noteTime" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>审核意见</label>
+                                        <label>备注</label>
 
                                         <input id="reply" name="reply" class="form-control"
                                                v-model="ruleForm.reply" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>审核人</label>
+                                        <label>备注人</label>
 
                                         <input id="glreply" name="glreply" class="form-control"
                                                v-model="ruleForm.glreply" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>审核时间 </label>
+                                        <label>备注时间 </label>
 
                                         <input id="replyTime" name="replyTime" class="form-control"
                                                v-model="ruleForm.replyTime" readonly>
@@ -150,8 +150,8 @@
             <%@ include file="../../static/setMenu.js"%>
             <%@ include file="../../utils/baseUrl.jsp"%>
 
-    var tableName = "liuyanxinxi";
-    var pageType = "add-or-update";
+    var tableName = "shiyanshuju";
+    var pageType = "info";
     var updateId = "";
 
 
@@ -166,7 +166,7 @@
             if (id != null && id != "" && id != "null") {
                 $.ajax({
                     type: "GET",
-                    url: baseUrl + "liuyanxinxi/info/" + id,
+                    url: baseUrl + tableName + "/info/" + id,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("token", window.sessionStorage.getItem('token'));
                     },
@@ -204,7 +204,7 @@
             window.sessionStorage.removeItem('id');
             $.ajax({
                 type: "GET",
-                url: baseUrl + "liuyanxinxi/info/" + id,
+                url: baseUrl + tableName + "/info/" + id,
                 async:false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("token", window.sessionStorage.getItem('token'));

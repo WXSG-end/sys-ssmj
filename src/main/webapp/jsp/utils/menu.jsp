@@ -36,17 +36,17 @@ var menus = [{
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "实验数据分类",
+			"menu": "实验数据信息",
 			"menuJump": "列表",
-			"tableName": "zhuanye"
+			"tableName": "shiyanshuju"
 		}],
 		"menu": "实验数据管理"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改", "删除"],
-			"menu": "实验数据记录",
+			"menu": "预约审核记录",
 			"menuJump": "列表",
-			"tableName": "shiyanshuju"
+			"tableName": "liuyanxinxi"
 		}],
 		"menu": "预约审核"
 	}, {
@@ -104,18 +104,18 @@ var menus = [{
 		"menu": "设备/耗材服务"
 	}, {
 		"child": [{
-			"buttons": [],
-			"menu": "实验数据分类",
+			"buttons": ["新增", "修改"],
+			"menu": "实验数据信息",
 			"menuJump": "列表",
-			"tableName": "zhuanye"
+			"tableName": "shiyanshuju"
 		}],
 		"menu": "实验数据管理"
 	}, {
 		"child": [{
 			"buttons": ["新增", "修改"],
-			"menu": "实验数据记录",
+			"menu": "预约审核记录",
 			"menuJump": "列表",
-			"tableName": "shiyanshuju"
+			"tableName": "liuyanxinxi"
 		}],
 		"menu": "预约审核"
 	}, {
@@ -157,18 +157,18 @@ var menus = [{
 		"menu": "设备/耗材服务"
 	}, {
 		"child": [{
-			"buttons": [],
-			"menu": "实验数据分类",
+			"buttons": ["新增"],
+			"menu": "实验数据信息",
 			"menuJump": "列表",
-			"tableName": "zhuanye"
+			"tableName": "shiyanshuju"
 		}],
 		"menu": "实验数据管理"
 	}, {
 		"child": [{
 			"buttons": ["新增"],
-			"menu": "实验数据记录",
+			"menu": "预约审核记录",
 			"menuJump": "列表",
-			"tableName": "shiyanshuju"
+			"tableName": "liuyanxinxi"
 		}],
 		"menu": "预约审核"
 	}, {

@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">管理</li>
-                        <li class="breadcrumb-item active">实验数据记录列表</li>
+                        <li class="breadcrumb-item active">实验数据信息列表</li>
                     </ol>
                 </div>
             </div>
@@ -70,10 +70,10 @@
                 <!-- Widget Item -->
                 <div class="col-md-12">
                     <div class="widget-area-2 lochana-box-shadow">
-                        <h3 class="widget-title">实验数据记录列表</h3>
+                        <h3 class="widget-title">实验数据信息列表</h3>
                         <div class="table-responsive mb-3">
                             <div class="col-sm-12">
-                                <button onclick="add()" class="btn btn-success ">录入数据</button>
+                                <button onclick="add()" class="btn btn-success 新增">录入数据</button>
                                 <button onclick="deleteMore()" type="button" class="btn btn-danger 删除">批量删除</button>
                             </div>
                             <table id="tableId" class="table table-bordered table-striped">
@@ -89,9 +89,9 @@
                                     <th onclick="sort('note')">实验数据内容</th>
                                     <th onclick="sort('yhnote')">记录人</th>
                                     <th onclick="sort('noteTime')">记录时间</th>
-                                    <th onclick="sort('reply')">审核意见</th>
-                                    <th onclick="sort('glreply')">审核人</th>
-                                    <th onclick="sort('replyTime')">审核时间</th>
+                                    <th onclick="sort('reply')">备注</th>
+                                    <th onclick="sort('glreply')">备注人</th>
+                                    <th onclick="sort('replyTime')">备注时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -149,7 +149,7 @@
             <%@ include file="../../utils/baseUrl.jsp"%>
             <%@ include file="../../static/getRoleButtons.js"%>
             <%@ include file="../../static/crossBtnControl.js"%>
-    var tableName = "liuyanxinxi";
+    var tableName = "shiyanshuju";
     var pageType = "list";
     var searchForm = {key: ""};
     var pageIndex = 1;
@@ -185,7 +185,7 @@
 
     // 获取数据列表
     function getDataList() {
-        http("liuyanxinxi/page", "GET", {
+        http(tableName + "/page", "GET", {
             page: pageIndex,
             limit: pageSize,
             sort: sortColumn,
@@ -213,9 +213,13 @@
 
     // 渲染表格数据
     function setDataRow(item, number) {
-        //创建行 
+        //创建行
         var row = document.createElement('tr');
         row.setAttribute('class', 'useOnce');
+
+        // ✅ 点击整行进入详情
+        row.setAttribute('onclick', 'detail(' + item.id + ')');
+
         //创建勾选框
         var checkbox = document.createElement('td');
         var checkboxDiv = document.createElement('div');
@@ -226,60 +230,77 @@
         checkboxInput.setAttribute('name', 'chk');
         checkboxInput.setAttribute('value', item.id);
         checkboxInput.setAttribute("id", number);
+        // ✅ 勾选框点击不触发行点击
+        checkboxInput.setAttribute("onclick", "event.stopPropagation();");
         checkboxDiv.appendChild(checkboxInput);
+
         var checkboxLabel = document.createElement('label');
         checkboxLabel.setAttribute("class", "custom-control-label");
         checkboxLabel.setAttribute("for", number);
+        // ✅ label 点击不触发行点击
+        checkboxLabel.setAttribute("onclick", "event.stopPropagation();");
         checkboxDiv.appendChild(checkboxLabel);
-        checkbox.appendChild(checkboxDiv);
-        row.appendChild(checkbox)
 
+        checkbox.appendChild(checkboxDiv);
+        // ✅ td 点击不触发行点击（避免点到左侧空白也跳）
+        checkbox.setAttribute("onclick", "event.stopPropagation();");
+        row.appendChild(checkbox);
+
+        // 实验数据内容
         var noteCell = document.createElement('td');
         noteCell.innerHTML = item.note;
         row.appendChild(noteCell);
 
+        // 记录人
         var yhnoteCell = document.createElement('td');
         yhnoteCell.innerHTML = item.yhnote;
         row.appendChild(yhnoteCell);
+
+        // 记录时间
         var noteTimeCell = document.createElement('td');
         noteTimeCell.innerHTML = item.noteTime;
         row.appendChild(noteTimeCell);
 
+        // 备注
         var replyCell = document.createElement('td');
         replyCell.innerHTML = item.reply;
         row.appendChild(replyCell);
 
+        // 备注人
         var glreplyCell = document.createElement('td');
         glreplyCell.innerHTML = item.glreply;
         row.appendChild(glreplyCell);
+
+        // 备注时间
         var replyTimeCell = document.createElement('td');
         replyTimeCell.innerHTML = item.replyTime;
         row.appendChild(replyTimeCell);
 
-
         //每行按钮
         var btnGroup = document.createElement('td');
+        // ✅ 操作列点击不触发行点击
+        btnGroup.setAttribute("onclick", "event.stopPropagation();");
 
-        //修改按钮
+        // 修改/填写备注按钮（权限仍由 class=修改 控制）
         var editBtn = document.createElement('button');
-        var editAttr = 'edit(' + item.id + ')';
         editBtn.setAttribute("type", "button");
         editBtn.setAttribute("class", "btn btn-warning btn-sm 修改");
-        editBtn.setAttribute("onclick", editAttr);
-        editBtn.innerHTML = "审核"
-        btnGroup.appendChild(editBtn)
-        //删除按钮
+        editBtn.setAttribute("onclick", "event.stopPropagation();edit(" + item.id + ")");
+        editBtn.innerHTML = "填写备注";
+        btnGroup.appendChild(editBtn);
+
+        // 删除按钮
         var deleteBtn = document.createElement('button');
-        var deleteAttr = 'remove(' + item.id + ')';
         deleteBtn.setAttribute("type", "button");
         deleteBtn.setAttribute("class", "btn btn-danger btn-sm 删除");
-        deleteBtn.setAttribute("onclick", deleteAttr);
-        deleteBtn.innerHTML = "删除"
-        btnGroup.appendChild(deleteBtn)
+        deleteBtn.setAttribute("onclick", "event.stopPropagation();remove(" + item.id + ")");
+        deleteBtn.innerHTML = "删除";
+        btnGroup.appendChild(deleteBtn);
 
-        row.appendChild(btnGroup)
+        row.appendChild(btnGroup);
         return row;
     }
+
 
     //搜素输入检查
 
@@ -422,7 +443,7 @@
             } else {
                 paramArray.push(id);
             }
-            httpJson("liuyanxinxi/delete", "POST", paramArray, (res) => {
+            httpJson(tableName + "/delete", "POST", paramArray, (res) => {
                 if(res.code == 0
         )
             {
@@ -466,8 +487,8 @@
 
     //单列求和
     function getSum(colName) {
-        http("liuyanxinxi" + colName, "GET", {
-            tableName: "liuyanxinxi",
+        http(tableName + colName, "GET", {
+            tableName: tableName,
             columnName: colName
         }, (res) => {
             if(res.code == 0
@@ -495,7 +516,7 @@
     //跨表
     function crossTable(id, crossTableName) {
         window.sessionStorage.setItem('crossTableId', id);
-        window.sessionStorage.setItem('crossTableName', "liuyanxinxi");
+        window.sessionStorage.setItem('crossTableName', tableName);
         var url = "../" + crossTableName + "/add-or-update.jsp";
         window.location.href = url;
     }
